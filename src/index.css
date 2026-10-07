@@ -140,3 +140,12 @@ a {
     0 0 25px 4px rgba(248, 174, 13, 0.9),
     0 0 55px 12px rgba(234, 88, 12, 0.5);
 }
+
+/* ─── Hide scrollbars everywhere (scroll still works) ── */
+* {
+  scrollbar-width: none;       /* Firefox */
+  -ms-overflow-style: none;    /* IE / Edge legacy */
+}
+*::-webkit-scrollbar {
+  display: none;               /* Chrome / Safari / Opera */
+}

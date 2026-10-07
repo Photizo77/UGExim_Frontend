@@ -125,7 +125,7 @@ export default function LandingPage() {
             <h1
               className="font-extrabold text-white leading-[1.08] tracking-tight mb-4"
               style={{
-                fontSize: 'clamp(1.8rem, 3.5vw, 3.2rem)',
+                fontSize: 'clamp(4rem, 3.5vw, 3.2rem)',
                 margin: '0 0 16px',
                 letterSpacing: '-0.02em',
               }}
@@ -138,7 +138,7 @@ export default function LandingPage() {
               </span>
             </h1>
 
-            <p className="text-sm leading-relaxed mb-6 max-w-md" style={{ color: '#D1D5DB', fontSize: 'clamp(12px, 1.1vw, 14px)' }}>
+            <p className="text-sm leading-relaxed mb-6 max-w-md" style={{ color: '#D1D5DB', fontSize: 'clamp(16px, 1.1vw, 12px)' }}>
               Uganda Exim Limited (UgExim) is a specialized financial institution
               bridging the financing gap for Ugandan exporters — providing innovative,
               flexible and affordable solutions to compete globally and drive
@@ -166,7 +166,7 @@ export default function LandingPage() {
           {/* Right: glass cards */}
           <div
             className="flex flex-col"
-            style={{ gap: 'clamp(8px, 1.2vw, 20px)', width: 'clamp(220px, 23vw, 300px)' }}
+            style={{ gap: 'clamp(50px, 1.2vw, 20px)', width: 'clamp(220px, 23vw, 300px)' }}
           >
             {/* Card 1 */}
             <div style={{

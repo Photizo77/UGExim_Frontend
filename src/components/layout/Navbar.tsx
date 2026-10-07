@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 function Logo() {
   return (
@@ -35,10 +35,20 @@ const NAV_LINKS = [
 ]
 
 export default function Navbar() {
+  const navigate = useNavigate()
   return (
     <header
       className="relative z-40 w-full flex-shrink-0"
-      style={{ fontFamily: '"Plus Jakarta Sans", Inter, sans-serif' }}
+      style={{
+        fontFamily: '"Plus Jakarta Sans", Inter, sans-serif',
+        position: 'sticky',
+        top: 0,
+        zIndex: 50,
+        background: 'rgba(4,6,9,0.85)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        borderBottom: '1px solid rgba(255,255,255,0.06)',
+      }}
     >
       <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-3.5 flex items-center justify-between gap-4">
         <Logo />
@@ -76,6 +86,7 @@ export default function Navbar() {
         <div className="flex items-center gap-2.5 flex-shrink-0">
           <button
             type="button"
+            onClick={() => navigate('/login')}
             className="px-4 py-2 text-xs font-semibold text-white rounded-full cursor-pointer transition-colors"
             style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.3)' }}
           >
@@ -83,6 +94,7 @@ export default function Navbar() {
           </button>
           <button
             type="button"
+            onClick={() => navigate('/create-account')}
             className="px-4 py-2 text-xs font-bold rounded-full cursor-pointer flex items-center gap-1.5 flex-shrink-0"
             style={{ color: '#0a0a0a', background: '#F8AE0D', border: 'none', boxShadow: '0 0 18px rgba(248,174,13,0.4)' }}
           >

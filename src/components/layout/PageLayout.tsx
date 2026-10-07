@@ -14,12 +14,12 @@ export default function PageLayout({ children, scrollable = false }: PageLayoutP
         backgroundColor: '#040609',
         color: '#E2E8F0',
         fontFamily: '"Plus Jakarta Sans", Inter, sans-serif',
-        minHeight: '100vh',
+        height: '100vh',
+        maxHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
         overflowX: 'hidden',
-        overflowY: scrollable ? 'auto' : 'hidden',
-        ...(scrollable ? {} : { height: '100vh', maxHeight: '100vh' }),
+        overflowY: 'hidden',
       }}
     >
       {/* Ambient streak */}
@@ -37,7 +37,16 @@ export default function PageLayout({ children, scrollable = false }: PageLayoutP
         }}
       />
       <Navbar />
-      <main style={{ position: 'relative', zIndex: 1, flex: 1, minHeight: 0 }}>
+      <main
+        style={{
+          position: 'relative',
+          zIndex: 1,
+          flex: 1,
+          minHeight: 0,
+          overflowY: scrollable ? 'auto' : 'hidden',
+          overflowX: 'hidden',
+        }}
+      >
         {children}
       </main>
     </div>
