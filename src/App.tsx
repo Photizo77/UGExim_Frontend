@@ -1,5 +1,18 @@
-import AppRouter from '@/router'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import Login from './AuthPages/Login'
+import CreateAccount from './AuthPages/CreateAccount'
 
-export default function App() {
-  return <AppRouter />
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/create-account" element={<CreateAccount />} />
+
+        <Route path="/" element={<Navigate to="/login" replace />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
+
+export default App
