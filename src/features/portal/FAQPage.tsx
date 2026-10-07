@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import PageLayout from '@/components/layout/PageLayout'
 
-const GOLD = '#F8AE0D'
+const GOLD = '#FECC15'
 const GOLD_FAINT = 'rgba(248,174,13,0.08)'
 const GOLD_BORDER = 'rgba(248,174,13,0.2)'
 const CARD_BG = 'rgba(13,18,28,0.8)'

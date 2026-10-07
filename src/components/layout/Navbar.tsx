@@ -34,7 +34,7 @@ function Logo() {
             letterSpacing: '-0.02em',
           }}
         >
-          UgE<span style={{ color: '#F8AE0D' }}>x</span>im
+          UgE<span style={{ color: '#FECC15' }}>x</span>im
         </span>
       </div>
     </NavLink>
@@ -75,7 +75,7 @@ export default function Navbar() {
             to={to}
             end={to === '/'}
             style={({ isActive }) => ({
-              color: isActive ? '#F8AE0D' : '#ffffff',
+              color: isActive ? '#FECC15' : '#ffffff',
               textDecoration: 'none',
               position: 'relative',
               paddingBottom: 4,
@@ -95,9 +95,9 @@ export default function Navbar() {
                       transform: 'translateX(-50%)',
                       width: 24,
                       height: 2.5,
-                      background: '#F8AE0D',
+                      background: '#FECC15',
                       borderRadius: 99,
-                      boxShadow: '0 0 8px #F8AE0D',
+                      boxShadow: '0 0 8px #FECC15',
                       display: 'block',
                     }}
                   />
@@ -131,7 +131,7 @@ export default function Navbar() {
             fontSize: 13,
             fontWeight: 700,
             color: '#0a0a0a',
-            background: '#F8AE0D',
+            background: '#FECC15',
             border: 'none',
             borderRadius: 999,
             cursor: 'pointer',

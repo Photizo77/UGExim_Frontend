@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Eye, EyeOff, LockKeyhole, Mail } from 'lucide-react'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEnvelope, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -53,14 +54,14 @@ function Login() {
           <nav className="flex items-center gap-3 sm:gap-6">
             <button
               type="button"
-              className="hidden text-sm font-medium text-[#030712] transition hover:text-[#E5B813] sm:block"
+              className="hidden text-sm font-medium text-[#030712] transition hover:text-[#FECC15] sm:block"
             >
               Log in
             </button>
 
             <button
               type="button"
-              className="rounded-lg bg-[#E6C200] px-4 py-2.5 text-xs font-semibold text-[#030712] transition hover:bg-[#d4b300] sm:px-6 sm:py-3 sm:text-sm"
+              className="rounded-lg bg-[#FECC15] px-4 py-2.5 text-xs font-semibold text-[#030712] transition hover:bg-[#e6b800] sm:px-6 sm:py-3 sm:text-sm"
             >
               Create Account
             </button>
@@ -107,7 +108,7 @@ function Login() {
                     {/* Vision and Mission */}
                     <div className="mt-8 grid gap-4 sm:grid-cols-2">
                       <div className="rounded-xl border border-white/15 bg-black/35 p-5 backdrop-blur-md">
-                        <h3 className="text-sm font-semibold uppercase tracking-wide text-[#E5B813]">
+                        <h3 className="text-sm font-semibold uppercase tracking-wide text-[#FECC15]">
                           Our Vision
                         </h3>
 
@@ -120,7 +121,7 @@ function Login() {
                       </div>
 
                       <div className="rounded-xl border border-white/15 bg-black/35 p-5 backdrop-blur-md">
-                        <h3 className="text-sm font-semibold uppercase tracking-wide text-[#E5B813]">
+                        <h3 className="text-sm font-semibold uppercase tracking-wide text-[#FECC15]">
                           Our Mission
                         </h3>
 
@@ -141,9 +142,9 @@ function Login() {
 
                   {/* Member Access */}
                   <div className="mb-4 flex items-center gap-3">
-                    <span className="h-[2px] w-8 bg-[#E5B813]" />
+                    <span className="h-[2px] w-8 bg-[#FECC15]" />
 
-                    <p className="text-xs font-semibold tracking-[0.16em] text-[#E5B813]">
+                    <p className="text-xs font-semibold tracking-[0.16em] text-[#FECC15]">
                       MEMBER ACCESS
                     </p>
                   </div>
@@ -181,8 +182,8 @@ function Login() {
                       </label>
 
                       <div className="relative">
-                        <Mail
-                          size={18}
+                        <FontAwesomeIcon
+                          icon={faEnvelope}
                           className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
                           aria-hidden="true"
                         />
@@ -195,7 +196,7 @@ function Login() {
                           className={`w-full rounded-lg border bg-white py-3 pl-11 pr-4 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 ${
                             errors.email
                               ? 'border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
-                              : 'border-gray-200 focus:border-[#E5B813] focus:ring-2 focus:ring-[#E5B813]/20'
+                              : 'border-gray-200 focus:border-[#FECC15] focus:ring-2 focus:ring-[#FECC15]/20'
                           }`}
                         />
                       </div>
@@ -217,8 +218,8 @@ function Login() {
                       </label>
 
                       <div className="relative">
-                        <LockKeyhole
-                          size={18}
+                        <FontAwesomeIcon
+                          icon={faLock}
                           className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
                           aria-hidden="true"
                         />
@@ -231,7 +232,7 @@ function Login() {
                           className={`w-full rounded-lg border bg-white py-3 pl-11 pr-12 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 ${
                             errors.password
                               ? 'border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
-                              : 'border-gray-200 focus:border-[#E5B813] focus:ring-2 focus:ring-[#E5B813]/20'
+                              : 'border-gray-200 focus:border-[#FECC15] focus:ring-2 focus:ring-[#FECC15]/20'
                           }`}
                         />
 
@@ -246,9 +247,9 @@ function Login() {
                           }
                         >
                           {showPassword ? (
-                            <EyeOff size={18} />
+                            <FontAwesomeIcon icon={faEyeSlash} />
                           ) : (
-                            <Eye size={18} />
+                            <FontAwesomeIcon icon={faEye} />
                           )}
                         </button>
                       </div>
@@ -264,7 +265,7 @@ function Login() {
                     <div className="mt-3 flex justify-end">
                       <button
                         type="button"
-                        className="text-sm font-medium text-gray-600 transition hover:text-[#C49F00]"
+                        className="text-sm font-medium text-gray-600 transition hover:text-[#FECC15]"
                       >
                         Recover Password?
                       </button>
@@ -273,7 +274,7 @@ function Login() {
                     {/* Sign In */}
                     <button
                       type="submit"
-                      className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-[#E6C200] px-6 py-3.5 text-sm font-semibold text-gray-900 transition hover:bg-[#d4b300]"
+                      className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg bg-[#FECC15] px-6 py-3.5 text-sm font-semibold text-gray-900 transition hover:bg-[#e6b800]"
                     >
                       Sign In
                       <span aria-hidden="true">→</span>
@@ -284,7 +285,7 @@ function Login() {
                       Have no Account?{' '}
                       <button
                         type="button"
-                        className="font-semibold text-gray-900 transition hover:text-[#C49F00]"
+                        className="font-semibold text-gray-900 transition hover:text-[#FECC15]"
                       >
                         Create an Account.
                       </button>

@@ -25,8 +25,8 @@ function PortfolioChartSVG() {
     <svg viewBox="0 0 200 70" fill="none" style={{ width: '100%', height: '100%' }}>
       <defs>
         <linearGradient id="pg" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#F8AE0D" stopOpacity="0.4" />
-          <stop offset="100%" stopColor="#F8AE0D" stopOpacity="0.02" />
+          <stop offset="0%" stopColor="#FECC15" stopOpacity="0.4" />
+          <stop offset="100%" stopColor="#FECC15" stopOpacity="0.02" />
         </linearGradient>
       </defs>
       <path
@@ -35,7 +35,7 @@ function PortfolioChartSVG() {
       />
       <path
         d="M0 65 L25 58 L55 50 L85 40 L110 30 L140 18 L170 9 L200 3"
-        stroke="#F8AE0D"
+        stroke="#FECC15"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -63,7 +63,7 @@ function IconBox({ children }: { children: React.ReactNode }) {
         alignItems: 'center',
         justifyContent: 'center',
         flexShrink: 0,
-        color: '#F8AE0D',
+        color: '#FECC15',
       }}
     >
       {children}
@@ -163,7 +163,7 @@ export default function LandingPage() {
             <span
               style={{
                 fontStyle: 'normal',
-                background: '#F8AE0D',
+                background: '#FECC15',
                 WebkitBackgroundClip: 'text',
                 WebkitTextFillColor: 'transparent',
                 backgroundClip: 'text',
@@ -199,7 +199,7 @@ export default function LandingPage() {
               fontSize: 14,
               fontWeight: 700,
               color: '#0a0a0a',
-              background: '#F8AE0D',
+              background: '#FECC15',
               boxShadow: '0 4px 24px rgba(248,174,13,0.35)',
               textDecoration: 'none',
             }}
@@ -244,7 +244,7 @@ export default function LandingPage() {
                     background: 'rgba(248,174,13,0.15)',
                     border: '1px solid rgba(248,174,13,0.3)',
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: 10, fontWeight: 700, color: '#F8AE0D',
+                    fontSize: 10, fontWeight: 700, color: '#FECC15',
                   }}
                 >A</span>
                 <span style={{ fontSize: 12, fontWeight: 600, color: '#E5E7EB' }}>Agribusiness Finance</span>
@@ -295,7 +295,7 @@ export default function LandingPage() {
             </div>
             <span
               style={{
-                display: 'inline-block', fontSize: 10, fontWeight: 600, color: '#F8AE0D',
+                display: 'inline-block', fontSize: 10, fontWeight: 600, color: '#FECC15',
                 background: 'rgba(248,174,13,0.12)',
                 border: '1px solid rgba(248,174,13,0.22)',
                 padding: '2px 9px', borderRadius: 6, marginBottom: 7,
