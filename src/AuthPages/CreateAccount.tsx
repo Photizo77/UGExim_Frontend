@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { Eye, EyeOff } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -34,7 +33,6 @@ const createAccountSchema = z.object({
 type CreateAccountFormData = z.infer<typeof createAccountSchema>
 
 function CreateAccount() {
-  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const [verificationCode, setVerificationCode] = useState('')
 
@@ -98,7 +96,6 @@ function CreateAccount() {
           <nav className="flex items-center gap-3 sm:gap-6">
             <button
               type="button"
-              onClick={() => navigate('/login')}
               className="rounded-lg bg-[#FECC15] px-4 py-2 text-xs font-semibold text-[#030712] transition-colors duration-200 hover:bg-[#E6B800] active:bg-[#D4A900] sm:px-5 sm:py-2.5 sm:text-sm"
             >
               Log in
@@ -107,7 +104,7 @@ function CreateAccount() {
         </div>
       </header>
 
-      {/* Main Content */}
+     {/* Main Content */}
 <main className="min-h-0 flex-1 px-5 py-3 sm:px-8 lg:px-10">
   <div className="mx-auto h-full w-full max-w-[1480px]">
     <div className="h-full overflow-hidden rounded-[22px] border border-gray-200 bg-white p-3 shadow-[0_10px_40px_rgba(0,0,0,0.06)] lg:p-4">
@@ -506,7 +503,7 @@ function CreateAccount() {
 </button>
                 </div>
 
-                <p className="mt-3 text-[13px] text-[#0f0f0f]">
+                <p className="mt-3 text-[13px] text-[#343B43]">
                   Didn&apos;t get it?{' '}
                   <button
                     type="button"
@@ -523,7 +520,6 @@ function CreateAccount() {
                 Already have an account?{' '}
                 <button
                   type="button"
-                  onClick={() => navigate('/login')}
                   className="font-semibold text-gray-900 transition hover:text-[#FECC15]"
                 >
                   Log in
@@ -536,6 +532,7 @@ function CreateAccount() {
     </div>
   </div>
 </main>
+
       {/* Footer */}
       <footer className="shrink-0 border-t border-[#F3F4F6] bg-white px-5 py-2 sm:px-8 lg:px-10">
         <div className="mx-auto flex h-[28px] max-w-[1480px] items-center justify-between text-[11px] text-[#6B7280]">

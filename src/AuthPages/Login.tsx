@@ -1,14 +1,10 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { Eye, EyeOff, LockKeyhole, Mail } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import loginBackground from '../assets/Landing Page background.jpeg'
 import ugeximLogo from '../assets/UGExim logo.png'
-
-
-
 const loginSchema = z.object({
   email: z
     .string()
@@ -18,7 +14,6 @@ const loginSchema = z.object({
 })
 type LoginFormData = z.infer<typeof loginSchema>
 function Login() {
-    const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const {
     register,
@@ -53,7 +48,6 @@ function Login() {
             </button>
             <button
               type="button"
-onClick={() => navigate('/create-account')}
               className="rounded-lg bg-[#FECC15] px-4 py-2 text-xs font-semibold text-[#030712] transition-colors duration-200 hover:bg-[#E6B800] active:bg-[#D4A900] sm:px-5 sm:py-2.5 sm:text-sm"
             >
               Create Account
@@ -266,7 +260,6 @@ onClick={() => navigate('/create-account')}
                       Have no Account?{' '}
                       <button
                         type="button"
-onClick={() => navigate('/create-account')}
                         className="font-semibold text-gray-900 transition hover:text-[#FECC15]"
                       >
                         Create an Account.
