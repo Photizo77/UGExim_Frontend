@@ -1,6 +1,6 @@
 import PageLayout from '@/components/layout/PageLayout'
 
-const GOLD = '#FECC15'
+const GOLD = '#F8AE0D'
 const GOLD_FAINT = 'rgba(248,174,13,0.08)'
 const GOLD_BORDER = 'rgba(248,174,13,0.2)'
 const CARD_BG = 'rgba(13,18,28,0.8)'
@@ -32,36 +32,43 @@ export default function AboutPage() {
   return (
     <PageLayout scrollable>
 
-      {/* ── Hero ── */}
-      <section style={{
-        background: 'linear-gradient(180deg, rgba(248,174,13,0.06) 0%, transparent 100%)',
-        borderBottom: `1px solid ${CARD_BORDER}`,
-        padding: '56px 40px 48px',
-      }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48, alignItems: 'center' }}>
+      {/* ── Hero — two-col on lg+, single col on smaller ── */}
+      <section
+        className="w-full"
+        style={{
+          background: 'linear-gradient(180deg, rgba(248,174,13,0.06) 0%, transparent 100%)',
+          borderBottom: `1px solid ${CARD_BORDER}`,
+        }}
+      >
+        <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-10 lg:py-14 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div>
-            <p style={{ fontSize: 11, fontWeight: 700, color: GOLD, letterSpacing: '0.12em', textTransform: 'uppercase', margin: '0 0 12px' }}>
+            <p className="text-[11px] font-bold tracking-[0.12em] uppercase mb-3" style={{ color: GOLD }}>
               About UgExim
             </p>
-            <h1 style={{ fontSize: 'clamp(1.8rem, 3vw, 2.8rem)', fontWeight: 800, color: '#fff', margin: '0 0 16px', lineHeight: 1.1, letterSpacing: '-0.02em' }}>
-              Building the Future of<br /><span style={{ color: GOLD }}>Ugandan Trade</span>
+            <h1 className="font-extrabold text-white leading-tight tracking-tight mb-4"
+              style={{ fontSize: 'clamp(1.6rem, 2.8vw, 2.8rem)' }}>
+              Building the Future of<br />
+              <span style={{ color: GOLD }}>Ugandan Trade</span>
             </h1>
-            <p style={{ fontSize: 14, color: '#9CA3AF', lineHeight: 1.7, margin: '0 0 24px' }}>
+            <p className="text-sm leading-relaxed mb-5" style={{ color: '#9CA3AF' }}>
               We are a strategic partner to Uganda's export community. Recognizing that traditional
               finance often cannot meet the unique needs of exporters, UgExim was created to offer
               tailored financial products and capacity-building support.
             </p>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: GOLD_FAINT, border: `1px solid ${GOLD_BORDER}`, borderRadius: 999, padding: '7px 16px' }}>
-              <span style={{ width: 7, height: 7, borderRadius: '50%', background: GOLD, boxShadow: `0 0 6px ${GOLD}` }} />
-              <span style={{ fontSize: 12, fontWeight: 600, color: '#fff' }}>In service for the past two years</span>
+            <div className="inline-flex items-center gap-2 rounded-full px-4 py-1.5"
+              style={{ background: GOLD_FAINT, border: `1px solid ${GOLD_BORDER}` }}>
+              <span className="w-2 h-2 rounded-full" style={{ background: GOLD, boxShadow: `0 0 6px ${GOLD}`, flexShrink: 0 }} />
+              <span className="text-xs font-semibold text-white">In service for the past two years</span>
             </div>
           </div>
 
-          {/* About Us card — mirrors site's "About Us / Trusted Export Finance" block */}
-          <div style={{ background: CARD_BG, border: `1px solid ${GOLD_BORDER}`, borderRadius: 20, padding: '32px 28px', backdropFilter: 'blur(12px)' }}>
-            <p style={{ fontSize: 11, fontWeight: 700, color: GOLD, letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 8px' }}>About Us</p>
-            <h2 style={{ fontSize: 16, fontWeight: 800, color: '#fff', margin: '0 0 12px' }}>Trusted Export Finance</h2>
-            <p style={{ fontSize: 13.5, color: '#9CA3AF', lineHeight: 1.75, margin: 0 }}>
+          {/* About Us card */}
+          <div className="rounded-2xl" style={{ background: CARD_BG, border: `1px solid ${GOLD_BORDER}`, padding: 'clamp(20px,2.5vw,32px)', backdropFilter: 'blur(12px)' }}>
+            <p className="text-[11px] font-bold tracking-[0.1em] uppercase mb-2" style={{ color: GOLD }}>About Us</p>
+            <h2 className="font-extrabold text-white mb-3" style={{ fontSize: 'clamp(14px,1.4vw,16px)' }}>
+              Trusted Export Finance
+            </h2>
+            <p className="text-sm leading-relaxed m-0" style={{ color: '#9CA3AF' }}>
               Uganda Exim Limited (UgExim) is a specialized financial institution established in 2024
               to bridge the financing gap faced by Ugandan exporters. We provide innovative, flexible,
               and affordable financial solutions that empower exporters to compete globally, drive
@@ -71,101 +78,83 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── Mission & Vision — side by side, concise ── */}
-      <section style={{ maxWidth: 1280, margin: '0 auto', padding: '48px 40px 0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20 }}>
-        <div style={{ background: CARD_BG, border: `1px solid ${GOLD_BORDER}`, borderRadius: 16, padding: '28px 24px', backdropFilter: 'blur(12px)' }}>
-          <p style={{ fontSize: 10, fontWeight: 700, color: GOLD, letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 6px' }}>Our Vision</p>
-          <h3 style={{ fontSize: 14, fontWeight: 700, color: '#fff', margin: '0 0 10px', lineHeight: 1.3 }}>
-            Leading Innovative Export Trade Financing
-          </h3>
-          <p style={{ fontSize: 13, color: '#9CA3AF', lineHeight: 1.7, margin: 0 }}>
-            To be the leading provider of innovative and affordable export trade financing solutions
-            for Ugandan exporters, driving international trade growth.
-          </p>
-        </div>
-        <div style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, borderRadius: 16, padding: '28px 24px', backdropFilter: 'blur(12px)' }}>
-          <p style={{ fontSize: 10, fontWeight: 700, color: GOLD, letterSpacing: '0.1em', textTransform: 'uppercase', margin: '0 0 6px' }}>Our Mission</p>
-          <h3 style={{ fontSize: 14, fontWeight: 700, color: '#fff', margin: '0 0 10px', lineHeight: 1.3 }}>
-            Driving Economic Growth Through Strategic Finance
-          </h3>
-          <p style={{ fontSize: 13, color: '#9CA3AF', lineHeight: 1.7, margin: 0 }}>
-            Providing accessible, affordable, and transparent trade finance solutions that enable
-            Ugandan exporters to thrive and compete globally.
-          </p>
+      {/* ── Mission & Vision — 1-col on 1024, 2-col on 1280+ ── */}
+      <section className="max-w-[1280px] mx-auto px-6 lg:px-10 pt-8 lg:pt-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          {[
+            { label: 'Our Vision', title: 'Leading Innovative Export Trade Financing', body: 'To be the leading provider of innovative and affordable export trade financing solutions for Ugandan exporters, driving international trade growth.' },
+            { label: 'Our Mission', title: 'Driving Economic Growth Through Strategic Finance', body: 'Providing accessible, affordable, and transparent trade finance solutions that enable Ugandan exporters to thrive and compete globally.', dimBorder: true },
+          ].map(c => (
+            <div key={c.label} className="rounded-2xl"
+              style={{ background: CARD_BG, border: `1px solid ${c.dimBorder ? CARD_BORDER : GOLD_BORDER}`, padding: 'clamp(18px,2vw,28px)', backdropFilter: 'blur(12px)' }}>
+              <p className="text-[10px] font-bold tracking-[0.1em] uppercase mb-1.5" style={{ color: GOLD }}>{c.label}</p>
+              <h3 className="font-bold text-white mb-2.5 leading-snug" style={{ fontSize: 'clamp(13px,1.2vw,14px)' }}>{c.title}</h3>
+              <p className="text-sm leading-relaxed m-0" style={{ color: '#9CA3AF' }}>{c.body}</p>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* ── Core Values — compact grid ── */}
-      <section style={{ maxWidth: 1280, margin: '0 auto', padding: '40px 40px 0' }}>
-        <h2 style={{ fontSize: 15, fontWeight: 700, color: '#fff', margin: '0 0 16px' }}>
+      {/* ── Core Values — auto-fill: 2 col on 1024, up to 5 on wide ── */}
+      <section className="max-w-[1280px] mx-auto px-6 lg:px-10 pt-8 lg:pt-10">
+        <h2 className="text-sm font-bold text-white mb-4">
           Our Core Values
-          <span style={{ fontSize: 12, fontWeight: 400, color: '#6B7280', marginLeft: 10 }}>
+          <span className="text-xs font-normal ml-2" style={{ color: '#6B7280' }}>
             — The fundamental principles that guide our interactions
           </span>
         </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 12 }}>
+        <div
+          className="grid gap-3"
+          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 200px), 1fr))' }}
+        >
           {VALUES.map(v => (
-            <div key={v.title} style={{
-              background: CARD_BG, border: `1px solid ${CARD_BORDER}`,
-              borderRadius: 14, padding: '18px 16px', backdropFilter: 'blur(10px)',
-            }}>
-              <div style={{ width: 8, height: 8, borderRadius: '50%', background: GOLD, marginBottom: 10 }} />
-              <h4 style={{ fontSize: 13, fontWeight: 700, color: '#fff', margin: '0 0 6px' }}>{v.title}</h4>
-              <p style={{ fontSize: 12, color: '#9CA3AF', lineHeight: 1.55, margin: 0 }}>{v.desc}</p>
+            <div key={v.title} className="rounded-[14px]"
+              style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, padding: 'clamp(14px,1.6vw,18px)', backdropFilter: 'blur(10px)' }}>
+              <div className="w-2 h-2 rounded-full mb-2.5" style={{ background: GOLD }} />
+              <h4 className="text-[13px] font-bold text-white mb-1.5">{v.title}</h4>
+              <p className="text-xs leading-snug m-0" style={{ color: '#9CA3AF' }}>{v.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ── Mandate — compact list ── */}
-      <section style={{ maxWidth: 1280, margin: '0 auto', padding: '40px 40px 0' }}>
-        <h2 style={{ fontSize: 15, fontWeight: 700, color: '#fff', margin: '0 0 16px' }}>
+      {/* ── Mandate ── */}
+      <section className="max-w-[1280px] mx-auto px-6 lg:px-10 pt-8 lg:pt-10">
+        <h2 className="text-sm font-bold text-white mb-4">
           Our Mandate
-          <span style={{ fontSize: 12, fontWeight: 400, color: '#6B7280', marginLeft: 10 }}>
-            — Driving Uganda's export growth
-          </span>
+          <span className="text-xs font-normal ml-2" style={{ color: '#6B7280' }}>— Driving Uganda's export growth</span>
         </h2>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div className="flex flex-col gap-2.5">
           {MANDATE.map((item, i) => (
-            <div key={i} style={{
-              display: 'flex', alignItems: 'center', gap: 14,
-              background: CARD_BG, border: `1px solid ${CARD_BORDER}`,
-              borderRadius: 12, padding: '13px 18px', backdropFilter: 'blur(10px)',
-            }}>
-              <span style={{
-                width: 22, height: 22, borderRadius: '50%', flexShrink: 0,
-                background: GOLD_FAINT, border: `1px solid ${GOLD_BORDER}`,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 10, fontWeight: 700, color: GOLD,
-              }}>{i + 1}</span>
-              <p style={{ fontSize: 13, color: '#D1D5DB', margin: 0 }}>{item}</p>
+            <div key={i} className="flex items-center gap-3.5 rounded-xl"
+              style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, padding: '12px 18px', backdropFilter: 'blur(10px)' }}>
+              <span className="flex items-center justify-center rounded-full flex-shrink-0 text-[10px] font-bold"
+                style={{ width: 22, height: 22, background: GOLD_FAINT, border: `1px solid ${GOLD_BORDER}`, color: GOLD }}>
+                {i + 1}
+              </span>
+              <p className="text-[13px] m-0" style={{ color: '#D1D5DB' }}>{item}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ── Leadership ── */}
-      <section style={{ maxWidth: 1280, margin: '0 auto', padding: '40px 40px 0' }}>
-        <h2 style={{ fontSize: 15, fontWeight: 700, color: '#fff', margin: '0 0 16px' }}>
-          The Management Team
-        </h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 16 }}>
+      {/* ── Leadership — auto-fill: 1-col 1024, 3-col 1280 ── */}
+      <section className="max-w-[1280px] mx-auto px-6 lg:px-10 pt-8 lg:pt-10">
+        <h2 className="text-sm font-bold text-white mb-4">The Management Team</h2>
+        <div
+          className="grid gap-4"
+          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 260px), 1fr))' }}
+        >
           {TEAM.map(t => (
-            <div key={t.name} style={{
-              background: CARD_BG, border: `1px solid ${CARD_BORDER}`,
-              borderRadius: 16, padding: '24px 22px',
-              display: 'flex', alignItems: 'center', gap: 16,
-              backdropFilter: 'blur(10px)',
-            }}>
-              <div style={{
-                width: 52, height: 52, borderRadius: '50%', flexShrink: 0,
-                background: GOLD_FAINT, border: `2px solid ${GOLD_BORDER}`,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 14, fontWeight: 800, color: GOLD,
-              }}>{t.initial}</div>
+            <div key={t.name} className="flex items-center gap-4 rounded-2xl"
+              style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, padding: 'clamp(16px,2vw,24px)', backdropFilter: 'blur(10px)' }}>
+              <div className="rounded-full flex-shrink-0 flex items-center justify-center font-extrabold"
+                style={{ width: 52, height: 52, background: GOLD_FAINT, border: `2px solid ${GOLD_BORDER}`, fontSize: 14, color: GOLD }}>
+                {t.initial}
+              </div>
               <div>
-                <h4 style={{ fontSize: 14, fontWeight: 700, color: '#fff', margin: '0 0 3px' }}>{t.name}</h4>
-                <span style={{ fontSize: 12, color: GOLD, fontWeight: 600 }}>{t.role}</span>
+                <h4 className="text-[14px] font-bold text-white mb-0.5">{t.name}</h4>
+                <span className="text-xs font-semibold" style={{ color: GOLD }}>{t.role}</span>
               </div>
             </div>
           ))}
@@ -173,26 +162,28 @@ export default function AboutPage() {
       </section>
 
       {/* ── CTA ── */}
-      <section style={{ maxWidth: 1280, margin: '0 auto', padding: '40px 40px 72px' }}>
-        <div style={{
-          background: `linear-gradient(135deg, rgba(248,174,13,0.1), rgba(13,18,28,0.9))`,
-          border: `1px solid ${GOLD_BORDER}`,
-          borderRadius: 20, padding: '36px 48px',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap',
-        }}>
+      <section className="max-w-[1280px] mx-auto px-6 lg:px-10 pt-8 lg:pt-10 pb-14 lg:pb-20">
+        <div
+          className="flex flex-wrap items-center justify-between gap-5 rounded-2xl"
+          style={{
+            background: 'linear-gradient(135deg, rgba(248,174,13,0.1), rgba(13,18,28,0.9))',
+            border: `1px solid ${GOLD_BORDER}`,
+            padding: 'clamp(24px, 3vw, 36px) clamp(24px, 4vw, 48px)',
+          }}
+        >
           <div>
-            <h3 style={{ fontSize: 18, fontWeight: 800, color: '#fff', margin: '0 0 6px' }}>
+            <h3 className="font-extrabold text-white mb-1.5" style={{ fontSize: 'clamp(14px,1.5vw,18px)' }}>
               Ready to benefit from Uganda's premier export finance institution?
             </h3>
-            <p style={{ fontSize: 13, color: '#9CA3AF', margin: 0 }}>
+            <p className="text-sm m-0" style={{ color: '#9CA3AF' }}>
               Luthuli House, Plot 15 Luthuli Avenue, 5th Floor, Kampala, Uganda
             </p>
           </div>
-          <a href="/contact" style={{
-            padding: '11px 26px', borderRadius: 999, fontSize: 13, fontWeight: 700,
-            color: '#0a0a0a', background: GOLD, textDecoration: 'none',
-            boxShadow: '0 0 18px rgba(248,174,13,0.3)', whiteSpace: 'nowrap',
-          }}>Contact Us</a>
+          <a href="/contact"
+            className="rounded-full text-sm font-bold no-underline whitespace-nowrap"
+            style={{ padding: '11px 26px', color: '#0a0a0a', background: GOLD, boxShadow: '0 0 18px rgba(248,174,13,0.3)' }}>
+            Contact Us
+          </a>
         </div>
       </section>
 
