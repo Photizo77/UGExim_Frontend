@@ -1,6 +1,6 @@
 import PageLayout from '@/components/layout/PageLayout'
 
-const GOLD = '#FECC15'
+const GOLD = '#F8AE0D'
 const GOLD_FAINT = 'rgba(248,174,13,0.08)'
 const GOLD_BORDER = 'rgba(248,174,13,0.2)'
 const CARD_BG = 'rgba(13,18,28,0.8)'
@@ -8,11 +8,10 @@ const CARD_BORDER = 'rgba(255,255,255,0.07)'
 
 function Tag({ children }: { children: React.ReactNode }) {
   return (
-    <span style={{
-      fontSize: 10, fontWeight: 700, color: GOLD, textTransform: 'uppercase',
-      letterSpacing: '0.08em', background: GOLD_FAINT,
-      border: `1px solid ${GOLD_BORDER}`, padding: '3px 10px', borderRadius: 999,
-    }}>
+    <span
+      className="text-[10px] font-bold uppercase tracking-[0.08em] px-2.5 py-0.5 rounded-full"
+      style={{ color: GOLD, background: GOLD_FAINT, border: `1px solid ${GOLD_BORDER}` }}
+    >
       {children}
     </span>
   )
@@ -75,99 +74,85 @@ export default function InsightsPage() {
   return (
     <PageLayout scrollable>
 
-      {/* ── Hero banner ── */}
-      <section style={{
-        background: 'linear-gradient(180deg, rgba(248,174,13,0.06) 0%, transparent 100%)',
-        borderBottom: `1px solid ${CARD_BORDER}`,
-        padding: '56px 40px 48px',
-      }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-          <p style={{ fontSize: 11, fontWeight: 700, color: GOLD, letterSpacing: '0.12em', textTransform: 'uppercase', margin: '0 0 12px' }}>
+      {/* ── Hero ── */}
+      <section
+        className="w-full"
+        style={{
+          background: 'linear-gradient(180deg, rgba(248,174,13,0.06) 0%, transparent 100%)',
+          borderBottom: `1px solid ${CARD_BORDER}`,
+        }}
+      >
+        <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-10 lg:py-14">
+          <p className="text-[11px] font-bold tracking-[0.12em] uppercase mb-3" style={{ color: GOLD }}>
             Responsible Innovation
           </p>
-          <h1 style={{ fontSize: 'clamp(1.8rem, 3vw, 2.6rem)', fontWeight: 800, color: '#fff', margin: '0 0 14px', lineHeight: 1.1, letterSpacing: '-0.02em' }}>
+          <h1 className="font-extrabold text-white leading-tight tracking-tight mb-3"
+            style={{ fontSize: 'clamp(1.6rem, 2.8vw, 2.6rem)' }}>
             Insights &amp; Market Resources
           </h1>
-          <p style={{ fontSize: 14, color: '#9CA3AF', maxWidth: 520, lineHeight: 1.7, margin: 0 }}>
+          <p className="text-sm leading-relaxed max-w-lg m-0" style={{ color: '#9CA3AF' }}>
             Empowering Ugandan exporters with expert analysis, trade finance guides, and the latest
             trends in global market competitiveness.
           </p>
         </div>
       </section>
 
-      {/* ── Content ── */}
-      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '40px 40px 80px' }}>
+      {/* ── Main content ── */}
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-8 lg:py-10">
 
         {/* Filter tabs */}
-        <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 36 }}>
+        <div className="flex flex-wrap gap-2 mb-8">
           {CATEGORIES.map((cat, i) => (
-            <button key={cat} type="button" style={{
-              padding: '7px 16px', borderRadius: 999, fontSize: 12, fontWeight: 600, cursor: 'pointer',
-              background: i === 0 ? GOLD : 'transparent',
-              color: i === 0 ? '#0a0a0a' : '#9CA3AF',
-              border: `1px solid ${i === 0 ? GOLD : CARD_BORDER}`,
-              transition: 'all 0.15s',
-            }}>{cat}</button>
+            <button key={cat} type="button"
+              className="rounded-full text-xs font-semibold cursor-pointer transition-all"
+              style={{
+                padding: '6px 14px',
+                background: i === 0 ? GOLD : 'transparent',
+                color: i === 0 ? '#0a0a0a' : '#9CA3AF',
+                border: `1px solid ${i === 0 ? GOLD : CARD_BORDER}`,
+              }}>
+              {cat}
+            </button>
           ))}
         </div>
 
-        {/* ── Article grid ── */}
-        <p style={{ fontSize: 13, color: '#6B7280', margin: '0 0 24px' }}>
+        <p className="text-[13px] mb-5" style={{ color: '#6B7280' }}>
           Recent Insights — showing latest updates and expert analysis
         </p>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 20 }}>
+        {/* Article grid — auto-fill: 1 col 1024, 2 col 1280, 3 col wide */}
+        <div
+          className="grid gap-5"
+          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 300px), 1fr))' }}
+        >
           {ARTICLES.map((a) => (
             <article
               key={a.title}
+              className="flex flex-col gap-3 rounded-2xl cursor-pointer transition-all duration-200"
               style={{
                 background: CARD_BG,
                 border: `1px solid ${a.featured ? GOLD_BORDER : CARD_BORDER}`,
-                borderRadius: 16,
-                padding: '24px 22px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 12,
+                padding: 'clamp(16px, 1.8vw, 24px)',
                 backdropFilter: 'blur(12px)',
-                transition: 'border-color 0.2s, transform 0.2s',
-                cursor: 'pointer',
               }}
-              onMouseEnter={e => {
-                e.currentTarget.style.borderColor = GOLD_BORDER
-                e.currentTarget.style.transform = 'translateY(-2px)'
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.borderColor = a.featured ? GOLD_BORDER : CARD_BORDER
-                e.currentTarget.style.transform = 'translateY(0)'
-              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = GOLD_BORDER; e.currentTarget.style.transform = 'translateY(-2px)' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = a.featured ? GOLD_BORDER : CARD_BORDER; e.currentTarget.style.transform = 'translateY(0)' }}
             >
-              {/* Tag row */}
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div className="flex items-center justify-between">
                 <Tag>{a.category}</Tag>
-                <span style={{ fontSize: 11, color: '#4B5563' }}>{a.readTime}</span>
+                <span className="text-[11px]" style={{ color: '#4B5563' }}>{a.readTime}</span>
               </div>
-
-              {/* Meta */}
-              <p style={{ fontSize: 11, color: '#6B7280', margin: 0 }}>{a.date}</p>
-
-              {/* Title */}
-              <h2 style={{ fontSize: 15, fontWeight: 700, color: '#fff', margin: 0, lineHeight: 1.4 }}>
+              <p className="text-[11px] m-0" style={{ color: '#6B7280' }}>{a.date}</p>
+              <h2 className="font-bold text-white m-0 leading-snug" style={{ fontSize: 'clamp(13px,1.2vw,15px)' }}>
                 {a.title}
               </h2>
-
-              {/* Snippet */}
-              <p style={{ fontSize: 13, color: '#9CA3AF', lineHeight: 1.65, margin: 0, flex: 1 }}>
+              <p className="text-sm leading-relaxed m-0 flex-1" style={{ color: '#9CA3AF' }}>
                 {a.snippet}
               </p>
-
-              {/* CTA */}
-              <a href="#" style={{
-                display: 'inline-flex', alignItems: 'center', gap: 6,
-                fontSize: 13, fontWeight: 600, color: GOLD, textDecoration: 'none',
-                marginTop: 4,
-              }}>
+              <a href="#" className="inline-flex items-center gap-1.5 text-sm font-semibold no-underline mt-1"
+                style={{ color: GOLD }}>
                 Read Full Article
-                <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path d="M14 5l7 7m0 0l-7 7m7-7H3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" />
                 </svg>
               </a>
@@ -176,42 +161,40 @@ export default function InsightsPage() {
         </div>
 
         {/* ── Newsletter strip ── */}
-        <div style={{
-          marginTop: 64,
-          background: `linear-gradient(135deg, rgba(248,174,13,0.1), rgba(13,18,28,0.9))`,
-          border: `1px solid ${GOLD_BORDER}`,
-          borderRadius: 20,
-          padding: '40px 48px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: 32,
-          flexWrap: 'wrap',
-        }}>
-          <div>
-            <h3 style={{ fontSize: 18, fontWeight: 800, color: '#fff', margin: '0 0 6px' }}>
+        <div
+          className="flex flex-wrap items-center justify-between gap-6 rounded-2xl mt-14"
+          style={{
+            background: 'linear-gradient(135deg, rgba(248,174,13,0.1), rgba(13,18,28,0.9))',
+            border: `1px solid ${GOLD_BORDER}`,
+            padding: 'clamp(24px, 3vw, 40px) clamp(24px, 4vw, 48px)',
+          }}
+        >
+          <div className="max-w-md">
+            <h3 className="font-extrabold text-white mb-1.5" style={{ fontSize: 'clamp(15px,1.5vw,18px)' }}>
               Stay ahead of the curve
             </h3>
-            <p style={{ fontSize: 13, color: '#9CA3AF', margin: 0, maxWidth: 460, lineHeight: 1.6 }}>
+            <p className="text-sm leading-relaxed m-0" style={{ color: '#9CA3AF' }}>
               Join our newsletter for bi-weekly market analysis, trade policy updates, and exclusive
               invitations to export finance workshops.
             </p>
           </div>
-          <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          <div className="flex flex-wrap gap-2.5">
             <input
               type="email"
               placeholder="your@email.com"
+              className="rounded-lg text-sm text-white outline-none"
               style={{
-                padding: '10px 16px', borderRadius: 8, fontSize: 13,
-                background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.12)',
-                color: '#fff', outline: 'none', width: 220,
+                padding: '10px 16px',
+                background: 'rgba(255,255,255,0.06)',
+                border: '1px solid rgba(255,255,255,0.12)',
+                width: 'clamp(160px, 16vw, 220px)',
               }}
             />
-            <button type="button" style={{
-              padding: '10px 22px', borderRadius: 8, fontSize: 13, fontWeight: 700,
-              background: GOLD, color: '#0a0a0a', border: 'none', cursor: 'pointer',
-              whiteSpace: 'nowrap',
-            }}>Subscribe Free</button>
+            <button type="button"
+              className="rounded-lg text-sm font-bold cursor-pointer whitespace-nowrap"
+              style={{ padding: '10px 20px', background: GOLD, color: '#0a0a0a', border: 'none' }}>
+              Subscribe Free
+            </button>
           </div>
         </div>
 

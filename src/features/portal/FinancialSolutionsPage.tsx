@@ -1,20 +1,19 @@
 import PageLayout from '@/components/layout/PageLayout'
 
-const GOLD = '#FECC15'
+const GOLD = '#F8AE0D'
 const GOLD_FAINT = 'rgba(248,174,13,0.08)'
 const GOLD_BORDER = 'rgba(248,174,13,0.2)'
 const CARD_BG = 'rgba(13,18,28,0.8)'
 const CARD_BORDER = 'rgba(255,255,255,0.07)'
 
-// ─── Matches the homepage "carousel" card style exactly ─────────────────────
 const SOLUTIONS = [
   {
     tag: 'Trusted Export Finance',
     heading: 'Finance That Grows\nWith Your Harvest',
-    desc: 'Specialized loans for out-growers, processors, and cooperatives — designed around Uganda\'s agricultural seasons.',
+    desc: "Specialized loans for out-growers, processors, and cooperatives — designed around Uganda's agricultural seasons.",
     stats: [{ v: '$25M+', l: 'Financed' }, { v: '25+', l: 'Exporters' }],
     icon: (
-      <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+      <svg width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
         <path d="M12 22V10" strokeLinecap="round" />
         <path d="M12 10C12 10 9 8 7 5c2 0 4 1 5 5z" strokeLinejoin="round" />
         <path d="M12 10C12 10 15 8 17 5c-2 0-4 1-5 5z" strokeLinejoin="round" />
@@ -30,7 +29,7 @@ const SOLUTIONS = [
     desc: 'Trade finance and pre-shipment funding for Ugandan manufacturers ready to compete on the world stage.',
     stats: [{ v: '$500K', l: 'Max Facility' }, { v: 'Multi', l: 'Sector' }],
     icon: (
-      <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+      <svg width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
         <rect x="2" y="7" width="20" height="15" rx="2" />
         <path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" strokeLinecap="round" />
         <line x1="2" y1="12" x2="22" y2="12" />
@@ -41,10 +40,10 @@ const SOLUTIONS = [
   {
     tag: 'Vehicle & Asset Finance',
     heading: 'Move More.\nExport Further.',
-    desc: 'Flexible leasing for heavy vehicles, refrigerated trucks, and industrial machinery — powering Uganda\'s logistics backbone.',
+    desc: "Flexible leasing for heavy vehicles, refrigerated trucks, and industrial machinery — powering Uganda's logistics backbone.",
     stats: [{ v: '72 mo.', l: 'Max Tenure' }, { v: 'Fast', l: 'Approval' }],
     icon: (
-      <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+      <svg width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
         <path d="M5 17H3a1 1 0 01-1-1v-4l2-5h14l2 5v4a1 1 0 01-1 1h-2" strokeLinecap="round" strokeLinejoin="round" />
         <circle cx="7.5" cy="17.5" r="2.5" />
         <circle cx="16.5" cy="17.5" r="2.5" />
@@ -59,7 +58,7 @@ const SOLUTIONS = [
     desc: 'Letters of credit, invoice discounting, and export guarantees — the instruments global trade demands.',
     stats: [{ v: 'BOU', l: 'Regulated' }, { v: 'URA', l: 'Compliant' }],
     icon: (
-      <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+      <svg width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
         <path d="M3 15l4-8 4 5 3-3 4 6" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M21 21H3" strokeLinecap="round" />
       </svg>
@@ -69,9 +68,9 @@ const SOLUTIONS = [
 ]
 
 const STATS = [
-  { v: '$22M+', l: 'Total Financed', sub: 'Fueling Uganda\'s export economy' },
-  { v: '63+', l: 'Empowered Exporters', sub: 'Supporting diverse local enterprises' },
-  { v: '17+', l: 'Sectors Covered', sub: 'Agro processing, Manufacturing, Logistics' },
+  { v: '$22M+', l: 'Total Financed', sub: "Fueling Uganda's export economy" },
+  { v: '63+',   l: 'Empowered Exporters', sub: 'Supporting diverse local enterprises' },
+  { v: '17+',   l: 'Sectors Covered', sub: 'Agro processing, Manufacturing, Logistics' },
 ]
 
 const MANDATE = [
@@ -87,103 +86,89 @@ export default function FinancialSolutionsPage() {
     <PageLayout scrollable>
 
       {/* ── Hero ── */}
-      <section style={{
-        background: 'linear-gradient(180deg, rgba(248,174,13,0.06) 0%, transparent 100%)',
-        borderBottom: `1px solid ${CARD_BORDER}`,
-        padding: '56px 40px 48px',
-      }}>
-        <div style={{ maxWidth: 1280, margin: '0 auto' }}>
-          <p style={{ fontSize: 11, fontWeight: 700, color: GOLD, letterSpacing: '0.12em', textTransform: 'uppercase', margin: '0 0 12px' }}>
+      <section
+        className="w-full"
+        style={{
+          background: 'linear-gradient(180deg, rgba(248,174,13,0.06) 0%, transparent 100%)',
+          borderBottom: `1px solid ${CARD_BORDER}`,
+        }}
+      >
+        <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-10 lg:py-14">
+          <p className="text-[11px] font-bold tracking-[0.12em] uppercase mb-3" style={{ color: GOLD }}>
             Our Focus Areas
           </p>
-          <h1 style={{ fontSize: 'clamp(1.8rem, 3vw, 2.6rem)', fontWeight: 800, color: '#fff', margin: '0 0 14px', lineHeight: 1.1, letterSpacing: '-0.02em' }}>
+          <h1 className="font-extrabold text-white mb-3 leading-tight tracking-tight"
+            style={{ fontSize: 'clamp(1.6rem, 2.8vw, 2.6rem)' }}>
             Financial Solutions
           </h1>
-          <p style={{ fontSize: 14, color: '#9CA3AF', maxWidth: 540, lineHeight: 1.7, margin: '0 0 32px' }}>
+          <p className="text-sm leading-relaxed mb-8 max-w-lg" style={{ color: '#9CA3AF' }}>
             We provide structured finance products designed to meet the unique challenges and
             opportunities of Ugandan export-oriented businesses.
           </p>
-          {/* Stats row */}
-          <div style={{ display: 'flex', gap: 40, flexWrap: 'wrap' }}>
+          {/* Stats — flex row, wraps on very small screens */}
+          <div className="flex flex-wrap gap-8 lg:gap-12">
             {STATS.map(s => (
               <div key={s.l}>
-                <div style={{ fontSize: 28, fontWeight: 800, color: GOLD, lineHeight: 1 }}>{s.v}</div>
-                <div style={{ fontSize: 13, fontWeight: 600, color: '#fff', marginTop: 3 }}>{s.l}</div>
-                <div style={{ fontSize: 11, color: '#6B7280', marginTop: 2 }}>{s.sub}</div>
+                <div className="font-extrabold leading-none" style={{ fontSize: 'clamp(1.6rem, 2.2vw, 1.9rem)', color: GOLD }}>{s.v}</div>
+                <div className="text-sm font-semibold text-white mt-1">{s.l}</div>
+                <div className="text-[11px] mt-0.5" style={{ color: '#6B7280' }}>{s.sub}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── Product cards — same style as homepage carousel ── */}
-      <section style={{ maxWidth: 1280, margin: '0 auto', padding: '48px 40px 40px' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: 20 }}>
+      {/* ── Product cards ── */}
+      <section className="max-w-[1280px] mx-auto px-6 lg:px-10 py-10 lg:py-12">
+        {/* auto-fill: fits 1 col on 1024, 2 on 1280, 4 on very wide */}
+        <div
+          className="grid gap-5"
+          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))' }}
+        >
           {SOLUTIONS.map(sol => (
             <div
               key={sol.label}
-              style={{
-                background: CARD_BG,
-                border: `1px solid ${CARD_BORDER}`,
-                borderRadius: 18,
-                padding: '28px 24px',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 16,
-                backdropFilter: 'blur(12px)',
-                transition: 'border-color 0.2s, transform 0.2s',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.borderColor = GOLD_BORDER
-                e.currentTarget.style.transform = 'translateY(-3px)'
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.borderColor = CARD_BORDER
-                e.currentTarget.style.transform = 'translateY(0)'
-              }}
+              className="flex flex-col gap-4 rounded-[18px] transition-all duration-200 cursor-default"
+              style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, padding: 'clamp(18px,2vw,28px)', backdropFilter: 'blur(12px)' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = GOLD_BORDER; e.currentTarget.style.transform = 'translateY(-3px)' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = CARD_BORDER; e.currentTarget.style.transform = 'translateY(0)' }}
             >
               {/* Icon + tag */}
-              <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                <div style={{
-                  width: 48, height: 48, borderRadius: 14,
-                  background: GOLD_FAINT, border: `1px solid ${GOLD_BORDER}`,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', color: GOLD,
-                }}>
+              <div className="flex items-start justify-between">
+                <div className="flex items-center justify-center rounded-[14px] flex-shrink-0"
+                  style={{ width: 46, height: 46, background: GOLD_FAINT, border: `1px solid ${GOLD_BORDER}`, color: GOLD }}>
                   {sol.icon}
                 </div>
-                <span style={{ fontSize: 10, fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '0.07em', textAlign: 'right', maxWidth: 100, lineHeight: 1.3 }}>
+                <span className="text-[10px] font-bold uppercase tracking-[0.07em] text-right leading-tight max-w-[100px]"
+                  style={{ color: GOLD }}>
                   {sol.tag}
                 </span>
               </div>
 
-              {/* Heading — two-line like the homepage */}
-              <h2 style={{ fontSize: 18, fontWeight: 800, color: '#fff', margin: 0, lineHeight: 1.25, whiteSpace: 'pre-line' }}>
+              {/* Heading */}
+              <h2 className="font-extrabold text-white leading-snug m-0 whitespace-pre-line"
+                style={{ fontSize: 'clamp(15px, 1.4vw, 18px)' }}>
                 {sol.heading}
               </h2>
 
-              {/* Description */}
-              <p style={{ fontSize: 13, color: '#9CA3AF', lineHeight: 1.65, margin: 0, flex: 1 }}>
+              {/* Desc */}
+              <p className="text-sm leading-relaxed m-0 flex-1" style={{ color: '#9CA3AF' }}>
                 {sol.desc}
               </p>
 
               {/* Stat pills */}
-              <div style={{ display: 'flex', gap: 10 }}>
+              <div className="flex gap-2.5">
                 {sol.stats.map(st => (
-                  <div key={st.l} style={{
-                    flex: 1, background: GOLD_FAINT, border: `1px solid ${GOLD_BORDER}`,
-                    borderRadius: 10, padding: '8px 10px', textAlign: 'center',
-                  }}>
-                    <div style={{ fontSize: 16, fontWeight: 800, color: GOLD }}>{st.v}</div>
-                    <div style={{ fontSize: 10, color: '#9CA3AF', marginTop: 2 }}>{st.l}</div>
+                  <div key={st.l} className="flex-1 rounded-[10px] py-2 px-3 text-center"
+                    style={{ background: GOLD_FAINT, border: `1px solid ${GOLD_BORDER}` }}>
+                    <div className="font-extrabold" style={{ fontSize: 'clamp(13px,1.3vw,16px)', color: GOLD }}>{st.v}</div>
+                    <div className="text-[10px] mt-0.5" style={{ color: '#9CA3AF' }}>{st.l}</div>
                   </div>
                 ))}
               </div>
 
-              {/* Link */}
-              <a href="#" style={{
-                display: 'inline-flex', alignItems: 'center', gap: 6,
-                fontSize: 13, fontWeight: 600, color: GOLD, textDecoration: 'none',
-              }}>
+              <a href="#" className="inline-flex items-center gap-1.5 text-sm font-semibold no-underline"
+                style={{ color: GOLD }}>
                 Learn More →
               </a>
             </div>
@@ -191,51 +176,47 @@ export default function FinancialSolutionsPage() {
         </div>
       </section>
 
-      {/* ── Mandate — numbered list, no wall of text ── */}
-      <section style={{ maxWidth: 1280, margin: '0 auto', padding: '0 40px 48px' }}>
-        <h2 style={{ fontSize: 16, fontWeight: 700, color: '#fff', margin: '0 0 20px' }}>Our Mandate</h2>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 12 }}>
+      {/* ── Mandate ── */}
+      <section className="max-w-[1280px] mx-auto px-6 lg:px-10 pb-10 lg:pb-12">
+        <h2 className="text-base font-bold text-white mb-5">Our Mandate</h2>
+        <div className="grid gap-3"
+          style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 340px), 1fr))' }}>
           {MANDATE.map((item, i) => (
-            <div key={i} style={{
-              display: 'flex', alignItems: 'flex-start', gap: 14,
-              background: CARD_BG, border: `1px solid ${CARD_BORDER}`,
-              borderRadius: 12, padding: '14px 18px', backdropFilter: 'blur(10px)',
-            }}>
-              <span style={{
-                width: 24, height: 24, borderRadius: '50%', flexShrink: 0,
-                background: GOLD_FAINT, border: `1px solid ${GOLD_BORDER}`,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 11, fontWeight: 700, color: GOLD,
-              }}>{i + 1}</span>
-              <p style={{ fontSize: 13, color: '#D1D5DB', lineHeight: 1.55, margin: 0 }}>{item}</p>
+            <div key={i} className="flex items-start gap-3.5 rounded-xl"
+              style={{ background: CARD_BG, border: `1px solid ${CARD_BORDER}`, padding: '13px 18px', backdropFilter: 'blur(10px)' }}>
+              <span className="flex items-center justify-center rounded-full flex-shrink-0 text-[11px] font-bold"
+                style={{ width: 24, height: 24, background: GOLD_FAINT, border: `1px solid ${GOLD_BORDER}`, color: GOLD }}>
+                {i + 1}
+              </span>
+              <p className="text-sm leading-snug m-0" style={{ color: '#D1D5DB' }}>{item}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* ── CTA ── */}
-      <section style={{
-        maxWidth: 1280, margin: '0 auto', padding: '0 40px 72px',
-      }}>
-        <div style={{
-          background: `linear-gradient(135deg, rgba(248,174,13,0.1), rgba(13,18,28,0.9))`,
-          border: `1px solid ${GOLD_BORDER}`,
-          borderRadius: 20, padding: '40px 48px',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap',
-        }}>
+      <section className="max-w-[1280px] mx-auto px-6 lg:px-10 pb-14 lg:pb-20">
+        <div
+          className="flex flex-wrap items-center justify-between gap-6 rounded-2xl"
+          style={{
+            background: 'linear-gradient(135deg, rgba(248,174,13,0.1), rgba(13,18,28,0.9))',
+            border: `1px solid ${GOLD_BORDER}`,
+            padding: 'clamp(24px, 3vw, 40px) clamp(24px, 4vw, 48px)',
+          }}
+        >
           <div>
-            <h3 style={{ fontSize: 20, fontWeight: 800, color: '#fff', margin: '0 0 6px' }}>
+            <h3 className="font-extrabold text-white mb-1.5" style={{ fontSize: 'clamp(15px,1.6vw,20px)' }}>
               Ready to take your exports to the next level?
             </h3>
-            <p style={{ fontSize: 13, color: '#9CA3AF', margin: 0 }}>
+            <p className="text-sm m-0" style={{ color: '#9CA3AF' }}>
               Our financial experts are ready to discuss structured trade solutions tailored to your business.
             </p>
           </div>
-          <a href="/contact" style={{
-            padding: '12px 28px', borderRadius: 999, fontSize: 14, fontWeight: 700,
-            color: '#0a0a0a', background: GOLD, textDecoration: 'none',
-            boxShadow: '0 0 20px rgba(248,174,13,0.3)', whiteSpace: 'nowrap',
-          }}>Get in Touch</a>
+          <a href="/contact"
+            className="rounded-full text-sm font-bold no-underline whitespace-nowrap"
+            style={{ padding: '11px 26px', color: '#0a0a0a', background: GOLD, boxShadow: '0 0 20px rgba(248,174,13,0.3)' }}>
+            Get in Touch
+          </a>
         </div>
       </section>
 

@@ -1,22 +1,13 @@
 import { NavLink } from 'react-router-dom'
 
-// ─── Logo badge ───────────────────────────────────────────────────────────────
 function Logo() {
   return (
-    <NavLink to="/" aria-label="UgExim Home" style={{ textDecoration: 'none' }}>
-      <div
-        style={{
-          background: '#fff',
-          borderRadius: 10,
-          padding: '4px 10px',
-          display: 'inline-flex',
-          alignItems: 'center',
-        }}
-      >
+    <NavLink to="/" aria-label="UgExim Home" className="no-underline flex-shrink-0">
+      <div className="bg-white rounded-[10px] px-2.5 py-1 inline-flex items-center">
         <img
           src="/logo.png"
           alt="UgExim"
-          style={{ height: 32, width: 'auto', objectFit: 'contain', display: 'block' }}
+          className="h-8 w-auto object-contain block"
           onError={(e) => {
             const img = e.target as HTMLImageElement
             img.style.display = 'none'
@@ -25,16 +16,10 @@ function Logo() {
           }}
         />
         <span
-          style={{
-            display: 'none',
-            alignItems: 'center',
-            fontWeight: 800,
-            fontSize: 20,
-            color: '#111',
-            letterSpacing: '-0.02em',
-          }}
+          style={{ display: 'none', fontWeight: 800, fontSize: 20, color: '#111', letterSpacing: '-0.02em' }}
+          className="items-center"
         >
-          UgE<span style={{ color: '#FECC15' }}>x</span>im
+          UgE<span style={{ color: '#F8AE0D' }}>x</span>im
         </span>
       </div>
     </NavLink>
@@ -52,100 +37,62 @@ const NAV_LINKS = [
 export default function Navbar() {
   return (
     <header
-      style={{
-        position: 'relative',
-        zIndex: 40,
-        width: '100%',
-        maxWidth: 1280,
-        margin: '0 auto',
-        padding: '14px 40px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexShrink: 0,
-        fontFamily: '"Plus Jakarta Sans", Inter, sans-serif',
-      }}
+      className="relative z-40 w-full flex-shrink-0"
+      style={{ fontFamily: '"Plus Jakarta Sans", Inter, sans-serif' }}
     >
-      <Logo />
+      <div className="max-w-[1280px] mx-auto px-6 lg:px-10 py-3.5 flex items-center justify-between gap-4">
+        <Logo />
 
-      <nav style={{ display: 'flex', alignItems: 'center', gap: 32, fontSize: 14, fontWeight: 500 }}>
-        {NAV_LINKS.map(({ label, to }) => (
-          <NavLink
-            key={to}
-            to={to}
-            end={to === '/'}
-            style={({ isActive }) => ({
-              color: isActive ? '#FECC15' : '#ffffff',
-              textDecoration: 'none',
-              position: 'relative',
-              paddingBottom: 4,
-              opacity: isActive ? 1 : 0.85,
-              transition: 'opacity 0.15s',
-            })}
+        {/* Nav links — hidden below lg, visible lg+ */}
+        <nav className="hidden lg:flex items-center gap-6 xl:gap-8 text-sm font-medium flex-1 justify-center">
+          {NAV_LINKS.map(({ label, to }) => (
+            <NavLink
+              key={to}
+              to={to}
+              end={to === '/'}
+              className="relative pb-1 transition-opacity duration-150 no-underline"
+              style={({ isActive }) => ({
+                color: isActive ? '#F8AE0D' : '#ffffff',
+                opacity: isActive ? 1 : 0.85,
+                fontSize: 'clamp(12px, 1.1vw, 14px)',
+              })}
+            >
+              {({ isActive }) => (
+                <>
+                  {label}
+                  {isActive && (
+                    <span
+                      className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-[2.5px] rounded-full block"
+                      style={{ background: '#F8AE0D', boxShadow: '0 0 8px #F8AE0D' }}
+                    />
+                  )}
+                </>
+              )}
+            </NavLink>
+          ))}
+        </nav>
+
+        {/* Buttons */}
+        <div className="flex items-center gap-2.5 flex-shrink-0">
+          <button
+            type="button"
+            className="px-4 py-2 text-xs font-semibold text-white rounded-full cursor-pointer transition-colors"
+            style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.3)' }}
           >
-            {({ isActive }) => (
-              <>
-                {label}
-                {isActive && (
-                  <span
-                    style={{
-                      position: 'absolute',
-                      bottom: 0,
-                      left: '50%',
-                      transform: 'translateX(-50%)',
-                      width: 24,
-                      height: 2.5,
-                      background: '#FECC15',
-                      borderRadius: 99,
-                      boxShadow: '0 0 8px #FECC15',
-                      display: 'block',
-                    }}
-                  />
-                )}
-              </>
-            )}
-          </NavLink>
-        ))}
-      </nav>
-
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-        <button
-          type="button"
-          style={{
-            padding: '8px 20px',
-            fontSize: 13,
-            fontWeight: 600,
-            color: '#ffffff',
-            background: 'transparent',
-            border: '1px solid rgba(255,255,255,0.3)',
-            borderRadius: 999,
-            cursor: 'pointer',
-          }}
-        >
-          Log In
-        </button>
-        <button
-          type="button"
-          style={{
-            padding: '8px 20px',
-            fontSize: 13,
-            fontWeight: 700,
-            color: '#0a0a0a',
-            background: '#FECC15',
-            border: 'none',
-            borderRadius: 999,
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 6,
-            boxShadow: '0 0 18px rgba(248,174,13,0.4)',
-          }}
-        >
-          Get Started
-          <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path d="M14 5l7 7m0 0l-7 7m7-7H3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" />
-          </svg>
-        </button>
+            Log In
+          </button>
+          <button
+            type="button"
+            className="px-4 py-2 text-xs font-bold rounded-full cursor-pointer flex items-center gap-1.5 flex-shrink-0"
+            style={{ color: '#0a0a0a', background: '#F8AE0D', border: 'none', boxShadow: '0 0 18px rgba(248,174,13,0.4)' }}
+          >
+            <span className="hidden sm:inline">Get Started</span>
+            <span className="sm:hidden">Start</span>
+            <svg width="13" height="13" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path d="M14 5l7 7m0 0l-7 7m7-7H3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" />
+            </svg>
+          </button>
+        </div>
       </div>
     </header>
   )
