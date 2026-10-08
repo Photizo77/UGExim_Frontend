@@ -4,564 +4,248 @@ import { Eye, EyeOff } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-
 import loginBackground from '../assets/Landing Page background.jpeg'
 import ugeximLogo from '../assets/UGExim logo.png'
 
+const GOLD = '#F8AE0D'
+const FONT = '"Plus Jakarta Sans", Inter, sans-serif'
+
 const createAccountSchema = z.object({
   businessName: z.string().min(1, 'Business name is required'),
-
   businessType: z.string().min(1, 'Please select a business type'),
-
-  registrationNumber: z
-    .string()
-    .min(1, 'Business registration number is required'),
-
+  registrationNumber: z.string().min(1, 'Business registration number is required'),
   contactName: z.string().min(1, 'Contact name is required'),
-
   phone: z.string().min(1, 'Phone number is required'),
-
-  email: z
-    .string()
-    .min(1, 'Email address is required')
-    .email('Please enter a valid email address'),
-
-  password: z
-    .string()
-    .min(8, 'Password must be at least 8 characters'),
+  email: z.string().min(1, 'Email address is required').email('Please enter a valid email address'),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
 })
-
 type CreateAccountFormData = z.infer<typeof createAccountSchema>
 
-function CreateAccount() {
+function Label({ htmlFor, children }: { htmlFor: string; children: React.ReactNode }) {
+  return (
+    <label htmlFor={htmlFor} style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#374151', marginBottom: 5, fontFamily: FONT }}>
+      {children}
+    </label>
+  )
+}
+function ErrorMsg({ msg }: { msg?: string }) {
+  if (!msg) return null
+  return <p style={{ margin: '4px 0 0', fontSize: 12, color: '#EF4444' }}>{msg}</p>
+}
+const inputStyle = (hasError: boolean): React.CSSProperties => ({
+  width: '100%',
+  border: `1px solid ${hasError ? '#EF4444' : '#E5E7EB'}`,
+  borderRadius: 8,
+  padding: '10px 14px',
+  fontSize: 14,
+  color: '#111827',
+  outline: 'none',
+  fontFamily: FONT,
+  boxSizing: 'border-box',
+  background: '#fff',
+})
+
+export default function CreateAccount() {
   const [showPassword, setShowPassword] = useState(false)
   const [verificationCode, setVerificationCode] = useState('')
   const navigate = useNavigate()
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<CreateAccountFormData>({
+  const { register, handleSubmit, formState: { errors } } = useForm<CreateAccountFormData>({
     resolver: zodResolver(createAccountSchema),
-
-    defaultValues: {
-      businessName: '',
-      businessType: '',
-      registrationNumber: '',
-      contactName: '',
-      phone: '',
-      email: '',
-      password: '',
-    },
+    defaultValues: { businessName: '', businessType: '', registrationNumber: '', contactName: '', phone: '', email: '', password: '' },
   })
 
-  const onSubmit = (_data: CreateAccountFormData) => {
-    // Account creation will be connected to the backend here.
-  }
-
-  const handleVerifyEmail = () => {
-    if (!verificationCode.trim()) {
-      return
-    }
-
-    // Email verification will be connected to the backend here.
-  }
-
-  const handleResendCode = () => {
-    // Resend verification code will be connected to the backend here.
-  }
-
-  const inputClass =
-    'w-full rounded-md border bg-white px-3 py-2.5 text-sm text-gray-900 outline-none transition placeholder:text-gray-400'
-
-  const normalInputClass =
-    'border-gray-300 focus:border-[#FECC15] focus:ring-2 focus:ring-[#FECC15]/20'
-
-  const errorInputClass =
-    'border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-500/20'
+  const onSubmit = (_data: CreateAccountFormData) => {}
+  const handleVerifyEmail = () => { if (!verificationCode.trim()) return }
+  const handleResendCode = () => {}
 
   return (
-    <div className="flex min-h-screen flex-col bg-white md:h-screen md:overflow-hidden">
-      {/* Header */}
-      <header className="shrink-0 border-b border-[#F3F4F6] bg-white">
-        <div className="mx-auto flex h-[64px] max-w-[1480px] items-center justify-between px-5 sm:px-8 md:px-7 lg:px-10 xl:px-10">
-          {/* Logo */}
-          <div className="flex items-center">
-            <img
-              src={ugeximLogo}
-              alt="UGExim"
-              className="h-7 w-auto object-contain"
-            />
-          </div>
+    /* Outer: full viewport, no scroll */
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden', background: '#fff', fontFamily: FONT, color: '#030712' }}>
 
-          {/* Navigation */}
-          <nav className="flex items-center gap-3 sm:gap-6">
-      <button
-  type="button"
-  onClick={() => navigate('/login')}
-  className="rounded-lg bg-[#FECC15] px-4 py-2 text-xs font-semibold text-[#030712] transition-colors duration-200 hover:bg-[#E6B800] active:bg-[#D4A900] sm:px-5 sm:py-2.5 sm:text-sm"
->
-  Log in
-</button>
-          </nav>
+      {/* ── Header ── */}
+      <header style={{ borderBottom: '1px solid #F3F4F6', background: '#fff', flexShrink: 0 }}>
+        <div style={{ maxWidth: 1480, margin: '0 auto', padding: '0 48px', height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <img src={ugeximLogo} alt="UgExim" style={{ height: 28, width: 'auto', objectFit: 'contain' }} />
+          <button type="button" onClick={() => navigate('/login')}
+            style={{ padding: '9px 22px', borderRadius: 8, background: GOLD, border: 'none', fontSize: 14, fontWeight: 700, color: '#030712', cursor: 'pointer', fontFamily: FONT }}>
+            Log In
+          </button>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="min-h-0 flex-1 px-5 py-3 sm:px-8 md:px-7 lg:px-10">
-        <div className="mx-auto h-full w-full max-w-[1480px]">
-          <div className="h-full overflow-hidden rounded-[22px] border border-gray-200 bg-white p-3 shadow-[0_10px_40px_rgba(0,0,0,0.06)] lg:p-4">
-            <div className="grid h-full min-h-0 gap-5 md:grid-cols-[1.05fr_0.95fr] md:gap-3 lg:gap-5">
-              {/* LEFT SIDE - FIXED HERO */}
-              <section className="min-h-[540px] md:h-full md:min-h-0 md:overflow-hidden">
-                <div className="relative h-full min-h-[540px] overflow-hidden rounded-[18px] bg-gray-900 md:min-h-0">
-                  {/* Background */}
-                  <img
-                    src={loginBackground}
-                    alt="UgExim trade finance"
-                    className="absolute inset-0 h-full w-full object-cover object-center"
-                  />
+      {/* ── Two-column body ── */}
+      <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 1fr', minHeight: 0, gap: 64, padding: '32px 48px', maxWidth: 1480, margin: '0 auto', width: '100%' }}>
 
-                  {/* Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/10" />
+        {/* ── Left — fixed hero image, never scrolls ── */}
+        <div style={{ position: 'relative', borderRadius: 20, overflow: 'hidden' }}>
+          <img src={loginBackground} alt="" aria-hidden
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(0,0,0,0.93) 0%, rgba(0,0,0,0.45) 55%, rgba(0,0,0,0.12) 100%)' }} />
 
-                  {/* Hero Content */}
-                  <div className="relative z-10 h-full px-8 pb-7 pt-30 text-white md:px-5 md:pb-5 md:pt-10 lg:px-8 lg:pb-7 lg:pt-[70px] xl:px-10 xl:pb-8 xl:pt-[100px]">
-                    {/* UgExim Brand */}
-                    <p className="text-base font-bold tracking-[-0.02em] sm:text-lg">
-                      <span className="text-white">UgExim</span>
-                      <span className="text-[#FECC15]">&gt;&gt;</span>
-                    </p>
-
-                    {/* Heading */}
-                    <h1 className="mt-8 max-w-[620px] text-[30px] font-bold leading-[1.12] tracking-[-0.035em] sm:text-[33px] md:mt-5 md:text-[24px] lg:mt-6 lg:text-[30px] xl:mt-8 xl:text-[36px]">
-                      <span className="text-white">
-                        Integrated Client Management &amp;{' '}
-                      </span>
-
-                      <span className="text-[#FECC15]">
-                        Loan Operations Platform.
-                      </span>
-                    </h1>
-
-                    {/* Supporting Text */}
-                    <p className="mt-5 max-w-[590px] text-[12px] font-semibold leading-[1.65] tracking-[0.01em] text-white/95 sm:text-[13px] md:mt-4 lg:mt-5">
-                      Financing Uganda&apos;s Exports. Connecting Uganda to the
-                      World through accessible and transparent trade finance.
-                    </p>
-
-                    {/* Vision and Mission */}
-                    <div className="mt-10 grid gap-4 sm:grid-cols-2 md:mt-6 md:gap-2 lg:mt-8 lg:gap-3 xl:mt-10 xl:gap-4">
-                      {/* Vision */}
-                      <div className="rounded-xl border border-white/15 bg-black/55 p-4 backdrop-blur-sm md:p-3 lg:p-4">
-                        <div className="flex items-center gap-2">
-                          <span className="h-2 w-2 rotate-45 border-2 border-[#FECC15]" />
-
-                          <h3 className="text-xs font-semibold text-white">
-                            Our Vision
-                          </h3>
-                        </div>
-
-                        <p className="mt-2.5 pl-4 text-[11px] leading-[1.55] text-gray-200">
-                          To be the leading provider of innovative and
-                          affordable export trade financing solutions for
-                          Ugandan exporters, thereby empowering and driving
-                          international trade growth.
-                        </p>
-                      </div>
-
-                      {/* Mission */}
-                      <div className="rounded-xl border border-white/15 bg-black/55 p-4 backdrop-blur-sm md:p-3 lg:p-4">
-                        <div className="flex items-center gap-2">
-                          <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#FECC15]/15">
-                            <span className="h-2 w-2 rounded-full bg-[#FECC15]" />
-                          </span>
-
-                          <h3 className="text-xs font-semibold text-white">
-                            Our Mission
-                          </h3>
-                        </div>
-
-                        <p className="mt-2.5 pl-7 text-[11px] leading-[1.55] text-gray-200">
-                          To build capacity within the export sector and
-                          promote Uganda&apos;s export potential on the global
-                          stage in a responsible and responsive manner.
-                        </p>
-                      </div>
-                    </div>
+          <div style={{ position: 'relative', zIndex: 2, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '40px 36px' }}>
+            <h1 style={{ fontSize: 'clamp(22px,2.2vw,30px)', fontWeight: 800, lineHeight: 1.12, letterSpacing: '-0.03em', margin: '0 0 14px', maxWidth: '18ch' }}>
+              <span style={{ color: '#fff' }}>Integrated Client Management & </span>
+              <span style={{ color: GOLD }}>Loan Operations Platform.</span>
+            </h1>
+            <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.82)', lineHeight: 1.7, margin: '0 0 28px', maxWidth: '44ch' }}>
+              Financing Uganda's Exports. Connecting Uganda to the World through accessible and transparent trade finance.
+            </p>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              {[
+                { icon: <span style={{ display: 'inline-block', width: 8, height: 8, border: `2px solid ${GOLD}`, transform: 'rotate(45deg)', flexShrink: 0 }} />, label: 'Our Vision', text: 'To be the leading provider of innovative and affordable export trade financing for Ugandan exporters, driving international trade growth.' },
+                { icon: <span style={{ display: 'inline-flex', width: 18, height: 18, borderRadius: '50%', background: 'rgba(248,174,13,0.18)', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}><span style={{ width: 7, height: 7, borderRadius: '50%', background: GOLD, display: 'block' }} /></span>, label: 'Our Mission', text: "To build capacity within the export sector and promote Uganda's export potential on the global stage." },
+              ].map(v => (
+                <div key={v.label} style={{ background: 'rgba(0,0,0,0.55)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 12, padding: '14px 16px', backdropFilter: 'blur(8px)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+                    {v.icon}
+                    <span style={{ fontSize: 12, fontWeight: 700, color: '#fff' }}>{v.label}</span>
                   </div>
+                  <p style={{ margin: 0, fontSize: 11, color: 'rgba(255,255,255,0.7)', lineHeight: 1.6 }}>{v.text}</p>
                 </div>
-              </section>
-
-              {/* RIGHT SIDE - ONLY THIS SECTION SCROLLS */}
-              <section className="min-h-0 overflow-hidden">
-                <div className="h-full overflow-y-auto px-4 py-5 sm:px-7 md:px-4 md:py-3 lg:px-6 lg:py-4 xl:px-9">
-                  <div className="mx-auto w-full max-w-[540px] pb-10">
-                    {/* Page Heading */}
-                    <div>
-                      <div className="mb-3 flex items-center gap-3">
-                        <span className="h-[2px] w-8 bg-[#FECC15]" />
-
-                        <p className="text-[11px] font-semibold tracking-[0.16em] text-[#FECC15]">
-                          BUSINESS REGISTRATION
-                        </p>
-                      </div>
-
-                      <h2 className="text-[30px] font-semibold tracking-[-0.02em] text-[#030712]">
-                        Create your business account
-                      </h2>
-
-                      <p className="mt-3 max-w-[520px] text-[13px] leading-5 text-[#6B7280]">
-                        For registered companies and cooperatives exporting
-                        goods. Individuals and sole proprietors can&apos;t
-                        apply.
-                      </p>
-                    </div>
-
-                    {/* Business Details */}
-                    <div className="mt-6 rounded-xl border border-[#E1E4E8] bg-white p-5 shadow-sm">
-                      <h3 className="text-lg font-semibold text-[#1A1E23]">
-                        Business details
-                      </h3>
-
-                      <form
-                        onSubmit={handleSubmit(onSubmit)}
-                        noValidate
-                        className="mt-5 space-y-4"
-                      >
-                        {/* Business Name */}
-                        <div>
-                          <label
-                            htmlFor="businessName"
-                            className="mb-1.5 block text-[13px] font-medium text-gray-700"
-                          >
-                            Registered business name
-                          </label>
-
-                          <input
-                            id="businessName"
-                            type="text"
-                            autoComplete="organization"
-                            placeholder="Enter registered business name"
-                            {...register('businessName')}
-                            className={`${inputClass} ${
-                              errors.businessName
-                                ? errorInputClass
-                                : normalInputClass
-                            }`}
-                          />
-
-                          {errors.businessName && (
-                            <p className="mt-1.5 text-xs text-red-600">
-                              {errors.businessName.message}
-                            </p>
-                          )}
-                        </div>
-
-                        {/* Business Type */}
-                        <div>
-                          <label
-                            htmlFor="businessType"
-                            className="mb-1.5 block text-[13px] font-medium text-gray-700"
-                          >
-                            Business type
-                          </label>
-
-                          <select
-                            id="businessType"
-                            {...register('businessType')}
-                            className={`${inputClass} ${
-                              errors.businessType
-                                ? errorInputClass
-                                : normalInputClass
-                            }`}
-                          >
-                            <option value="">Select business type</option>
-
-                            <option value="limited-company">
-                              Limited company
-                            </option>
-
-                            <option value="cooperative">Cooperative</option>
-                          </select>
-
-                          {errors.businessType && (
-                            <p className="mt-1.5 text-xs text-red-600">
-                              {errors.businessType.message}
-                            </p>
-                          )}
-                        </div>
-
-                        {/* Registration Number */}
-                        <div>
-                          <label
-                            htmlFor="registrationNumber"
-                            className="mb-1.5 block text-[13px] font-medium text-gray-700"
-                          >
-                            Business registration number
-                          </label>
-
-                          <input
-                            id="registrationNumber"
-                            type="text"
-                            placeholder="Enter registration number"
-                            {...register('registrationNumber')}
-                            className={`${inputClass} ${
-                              errors.registrationNumber
-                                ? errorInputClass
-                                : normalInputClass
-                            }`}
-                          />
-
-                          {errors.registrationNumber && (
-                            <p className="mt-1.5 text-xs text-red-600">
-                              {errors.registrationNumber.message}
-                            </p>
-                          )}
-                        </div>
-
-                        {/* Contact Name and Phone */}
-                        <div className="grid gap-4 sm:grid-cols-2">
-                          <div>
-                            <label
-                              htmlFor="contactName"
-                              className="mb-1.5 block text-[13px] font-medium text-gray-700"
-                            >
-                              Contact name
-                            </label>
-
-                            <input
-                              id="contactName"
-                              type="text"
-                              autoComplete="name"
-                              placeholder="Enter contact name"
-                              {...register('contactName')}
-                              className={`${inputClass} ${
-                                errors.contactName
-                                  ? errorInputClass
-                                  : normalInputClass
-                              }`}
-                            />
-
-                            {errors.contactName && (
-                              <p className="mt-1.5 text-xs text-red-600">
-                                {errors.contactName.message}
-                              </p>
-                            )}
-                          </div>
-
-                          <div>
-                            <label
-                              htmlFor="phone"
-                              className="mb-1.5 block text-[13px] font-medium text-gray-700"
-                            >
-                              Phone
-                            </label>
-
-                            <input
-                              id="phone"
-                              type="tel"
-                              autoComplete="tel"
-                              placeholder="Enter phone number"
-                              {...register('phone')}
-                              className={`${inputClass} ${
-                                errors.phone
-                                  ? errorInputClass
-                                  : normalInputClass
-                              }`}
-                            />
-
-                            {errors.phone && (
-                              <p className="mt-1.5 text-xs text-red-600">
-                                {errors.phone.message}
-                              </p>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Email */}
-                        <div>
-                          <label
-                            htmlFor="email"
-                            className="mb-1.5 block text-[13px] font-medium text-gray-700"
-                          >
-                            Email
-                          </label>
-
-                          <input
-                            id="email"
-                            type="email"
-                            autoComplete="email"
-                            placeholder="Enter email address"
-                            {...register('email')}
-                            className={`${inputClass} ${
-                              errors.email
-                                ? errorInputClass
-                                : normalInputClass
-                            }`}
-                          />
-
-                          {errors.email && (
-                            <p className="mt-1.5 text-xs text-red-600">
-                              {errors.email.message}
-                            </p>
-                          )}
-                        </div>
-
-                        {/* Password */}
-                        <div>
-                          <label
-                            htmlFor="password"
-                            className="mb-1.5 block text-[13px] font-medium text-gray-700"
-                          >
-                            Password
-                          </label>
-
-                          <div className="relative">
-                            <input
-                              id="password"
-                              type={showPassword ? 'text' : 'password'}
-                              autoComplete="new-password"
-                              placeholder="Create a password"
-                              {...register('password')}
-                              className={`${inputClass} pr-12 ${
-                                errors.password
-                                  ? errorInputClass
-                                  : normalInputClass
-                              }`}
-                            />
-
-                            <button
-                              type="button"
-                              onClick={() =>
-                                setShowPassword((current) => !current)
-                              }
-                              className="absolute right-3 top-1/2 -translate-y-1/2 rounded p-1 text-gray-400 transition hover:text-gray-700"
-                              aria-label={
-                                showPassword
-                                  ? 'Hide password'
-                                  : 'Show password'
-                              }
-                            >
-                              {showPassword ? (
-                                <EyeOff size={17} />
-                              ) : (
-                                <Eye size={17} />
-                              )}
-                            </button>
-                          </div>
-
-                          {errors.password && (
-                            <p className="mt-1.5 text-xs text-red-600">
-                              {errors.password.message}
-                            </p>
-                          )}
-                        </div>
-
-                        {/* Create Account */}
-                        <button
-                          type="submit"
-                          className="mt-2 w-full rounded-lg bg-[#FECC15] px-6 py-2.5 text-sm font-semibold text-gray-900 transition-colors duration-200 hover:bg-[#E6B800] active:bg-[#D4A900]"
-                        >
-                          Create account
-                        </button>
-                      </form>
-                    </div>
-
-                    {/* Verify Email */}
-                    <div className="mt-5 rounded-xl border border-[#E1E4E8] bg-white p-5 shadow-sm">
-                      <h3 className="text-lg font-semibold text-[#1A1E23]">
-                        Verify your email
-                      </h3>
-
-                      <p className="mt-1.5 text-[13px] leading-5 text-[#595F67]">
-                        We sent a 6-digit code to your email.
-                      </p>
-
-                      <div className="mt-4 flex gap-3">
-                        <input
-                          type="text"
-                          inputMode="numeric"
-                          maxLength={6}
-                          value={verificationCode}
-                          onChange={(event) =>
-                            setVerificationCode(
-                              event.target.value.replace(/\D/g, ''),
-                            )
-                          }
-                          placeholder="Enter code"
-                          aria-label="Verification code"
-                          className="min-w-0 flex-1 rounded-md border border-gray-300 bg-white px-3 py-2.5 text-sm text-gray-900 outline-none transition placeholder:text-gray-400 focus:border-[#FECC15] focus:ring-2 focus:ring-[#FECC15]/20"
-                        />
-
-                        <button
-                          type="button"
-                          onClick={handleVerifyEmail}
-                          disabled={verificationCode.length !== 6}
-                          className="rounded-md border border-[#030712] bg-white px-5 py-2.5 text-sm font-bold text-[#030712] transition-colors duration-200 hover:bg-[#FECC15] active:bg-[#E6B800] disabled:cursor-not-allowed disabled:border-gray-400 disabled:text-[#030712]"
-                        >
-                          Verify
-                        </button>
-                      </div>
-
-                      <p className="mt-3 text-[13px] text-[#343B43]">
-                        Didn&apos;t get it?{' '}
-
-                        <button
-                          type="button"
-                          onClick={handleResendCode}
-                          className="font-semibold text-[#1B3F61] transition hover:text-[#FECC15]"
-                        >
-                          Send a new code
-                        </button>
-                      </p>
-                    </div>
-
-                    {/* Login Link */}
-                    <p className="mt-5 text-center text-[13px] text-gray-500">
-                      Already have an account?{' '}
-
-                      <button
-  type="button"
-  onClick={() => navigate('/login')}
-  className="font-semibold text-gray-900 transition hover:text-[#FECC15]"
->
-  Log in
-</button>
-                    </p>
-                  </div>
-                </div>
-              </section>
+              ))}
             </div>
           </div>
         </div>
-      </main>
 
-      {/* Footer */}
-      <footer className="shrink-0 border-t border-[#F3F4F6] bg-white px-5 py-2 sm:px-8 lg:px-10">
-        <div className="mx-auto flex h-[28px] max-w-[1480px] items-center justify-between text-[11px] text-[#6B7280]">
-          <p>© 2026 UgExim. All rights reserved.</p>
+        {/* ── Right — only this column scrolls ── */}
+        <div style={{ overflowY: 'auto', paddingRight: 8 }}>
+          <div style={{ paddingBottom: 32 }}>
 
-          <div className="flex items-center gap-6">
-            <a
-              href="#"
-              className="font-medium transition hover:text-[#030712]"
-            >
-              PRIVACY POLICY
-            </a>
+            {/* eyebrow */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+              <span style={{ width: 28, height: 2, background: GOLD, borderRadius: 2, flexShrink: 0 }} />
+              <p style={{ margin: 0, fontSize: 11, fontWeight: 700, letterSpacing: '0.16em', color: GOLD, textTransform: 'uppercase' as const }}>Business Registration</p>
+            </div>
 
-            <a
-              href="#"
-              className="font-medium transition hover:text-[#030712]"
-            >
-              TERMS OF SERVICE
-            </a>
+            <h2 style={{ margin: '0 0 8px', fontSize: 'clamp(22px,2.2vw,28px)', fontWeight: 700, color: '#030712', letterSpacing: '-0.02em' }}>
+              Create your business account
+            </h2>
+            <p style={{ margin: '0 0 24px', fontSize: 13, color: '#6B7280', lineHeight: 1.6 }}>
+              For registered companies and cooperatives exporting goods. Individuals and sole proprietors can't apply.
+            </p>
+
+            {/* ── Business details ── */}
+            <h3 style={{ margin: '0 0 16px', fontSize: 15, fontWeight: 700, color: '#1A1E23' }}>Business details</h3>
+
+            <form onSubmit={handleSubmit(onSubmit)} noValidate style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+
+              <div>
+                <Label htmlFor="businessName">Registered business name</Label>
+                <input id="businessName" type="text" autoComplete="organization" placeholder="Enter registered business name"
+                  {...register('businessName')} style={inputStyle(!!errors.businessName)} />
+                <ErrorMsg msg={errors.businessName?.message} />
+              </div>
+
+              <div>
+                <Label htmlFor="businessType">Business type</Label>
+                <select id="businessType" {...register('businessType')} style={{ ...inputStyle(!!errors.businessType), appearance: 'none' as const }}>
+                  <option value="">Select business type</option>
+                  <option value="limited-company">Limited company</option>
+                  <option value="cooperative">Cooperative</option>
+                </select>
+                <ErrorMsg msg={errors.businessType?.message} />
+              </div>
+
+              <div>
+                <Label htmlFor="registrationNumber">Business registration number</Label>
+                <input id="registrationNumber" type="text" placeholder="Enter registration number"
+                  {...register('registrationNumber')} style={inputStyle(!!errors.registrationNumber)} />
+                <ErrorMsg msg={errors.registrationNumber?.message} />
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+                <div>
+                  <Label htmlFor="contactName">Contact name</Label>
+                  <input id="contactName" type="text" autoComplete="name" placeholder="Full name"
+                    {...register('contactName')} style={inputStyle(!!errors.contactName)} />
+                  <ErrorMsg msg={errors.contactName?.message} />
+                </div>
+                <div>
+                  <Label htmlFor="phone">Phone</Label>
+                  <input id="phone" type="tel" autoComplete="tel" placeholder="+256 ..."
+                    {...register('phone')} style={inputStyle(!!errors.phone)} />
+                  <ErrorMsg msg={errors.phone?.message} />
+                </div>
+              </div>
+
+              <div>
+                <Label htmlFor="email">Email</Label>
+                <input id="email" type="email" autoComplete="email" placeholder="Enter email address"
+                  {...register('email')} style={inputStyle(!!errors.email)} />
+                <ErrorMsg msg={errors.email?.message} />
+              </div>
+
+              <div>
+                <Label htmlFor="password">Password</Label>
+                <div style={{ position: 'relative' }}>
+                  <input id="password" type={showPassword ? 'text' : 'password'} autoComplete="new-password"
+                    placeholder="Create a password (min. 8 chars)"
+                    {...register('password')} style={{ ...inputStyle(!!errors.password), paddingRight: 44 }} />
+                  <button type="button" onClick={() => setShowPassword(p => !p)}
+                    style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', background: 'transparent', border: 'none', color: '#9CA3AF', cursor: 'pointer', padding: 4 }}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}>
+                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                  </button>
+                </div>
+                <ErrorMsg msg={errors.password?.message} />
+              </div>
+
+              <button type="submit"
+                style={{ width: '100%', padding: '12px', borderRadius: 8, background: GOLD, color: '#030712', fontWeight: 700, fontSize: 14, border: 'none', cursor: 'pointer', fontFamily: FONT, marginTop: 4 }}>
+                Create Account
+              </button>
+            </form>
+
+            {/* ── Verify email ── */}
+            <div style={{ marginTop: 24, paddingTop: 24, borderTop: '1px solid #F3F4F6' }}>
+              <h3 style={{ margin: '0 0 4px', fontSize: 15, fontWeight: 700, color: '#1A1E23' }}>Verify your email</h3>
+              <p style={{ margin: '0 0 14px', fontSize: 13, color: '#6B7280' }}>We sent a 6-digit code to your email.</p>
+
+              <div style={{ display: 'flex', gap: 10 }}>
+                <input type="text" inputMode="numeric" maxLength={6} value={verificationCode}
+                  onChange={e => setVerificationCode(e.target.value.replace(/\D/g, ''))}
+                  placeholder="Enter code" aria-label="Verification code"
+                  style={{ ...inputStyle(false), flex: 1 }} />
+                <button type="button" onClick={handleVerifyEmail} disabled={verificationCode.length !== 6}
+                  style={{ padding: '10px 20px', borderRadius: 8, border: '1px solid #030712', background: '#fff', color: '#030712', fontWeight: 700, fontSize: 13, cursor: 'pointer', fontFamily: FONT, whiteSpace: 'nowrap' as const, opacity: verificationCode.length !== 6 ? 0.45 : 1 }}>
+                  Verify
+                </button>
+              </div>
+
+              <p style={{ margin: '10px 0 0', fontSize: 13, color: '#374151' }}>
+                Didn't get it?{' '}
+                <button type="button" onClick={handleResendCode}
+                  style={{ background: 'transparent', border: 'none', fontSize: 13, fontWeight: 700, color: '#1B3F61', cursor: 'pointer', fontFamily: FONT }}>
+                  Send a new code
+                </button>
+              </p>
+            </div>
+
+            {/* login link */}
+            <p style={{ textAlign: 'center', fontSize: 13, color: '#6B7280', marginTop: 20 }}>
+              Already have an account?{' '}
+              <button type="button" onClick={() => navigate('/login')}
+                style={{ background: 'transparent', border: 'none', fontSize: 13, fontWeight: 700, color: GOLD, cursor: 'pointer', fontFamily: FONT }}>
+                Log in
+              </button>
+            </p>
+
+          </div>
+        </div>
+      </div>
+
+      {/* ── Footer ── */}
+      <footer style={{ flexShrink: 0, borderTop: '1px solid #F3F4F6', background: '#fff', padding: '10px 48px' }}>
+        <div style={{ maxWidth: 1480, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <p style={{ margin: 0, fontSize: 11, color: '#9CA3AF', textTransform: 'uppercase' as const, letterSpacing: '0.08em' }}>© 2026 UgExim. All rights reserved.</p>
+          <div style={{ display: 'flex', gap: 24 }}>
+            {['PRIVACY POLICY', 'TERMS OF SERVICE'].map(t => (
+              <a key={t} href="#" style={{ fontSize: 11, color: '#9CA3AF', textDecoration: 'none', fontWeight: 600, letterSpacing: '0.06em' }}>{t}</a>
+            ))}
           </div>
         </div>
       </footer>
     </div>
   )
 }
-
-export default CreateAccount
