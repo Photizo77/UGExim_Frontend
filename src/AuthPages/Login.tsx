@@ -6,6 +6,8 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import loginBackground from '../assets/Landing Page background.jpeg'
 import ugeximLogo from '../assets/UGExim logo.png'
+import { useAuth } from '@/auth/AuthContext'
+import { getApiErrorMessage } from '@/api/client'
 
 const GOLD = '#F8AE0D'
 const FONT = '"Plus Jakarta Sans", Inter, sans-serif'
@@ -19,13 +21,27 @@ type LoginFormData = z.infer<typeof loginSchema>
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false)
+  const [serverError, setServerError] = useState<string | null>(null)
+  const [submitting, setSubmitting] = useState(false)
   const navigate = useNavigate()
+  const { login } = useAuth()
 
   const { register, handleSubmit, formState: { errors } } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
   })
 
-  const onSubmit = (_data: LoginFormData) => {}
+  const onSubmit = async (data: LoginFormData) => {
+    setServerError(null)
+    setSubmitting(true)
+    try {
+      await login(data.email, data.password)
+      navigate('/client/dashboard', { replace: true })
+    } catch (error) {
+      setServerError(getApiErrorMessage(error))
+    } finally {
+      setSubmitting(false)
+    }
+  }
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100vh', overflow: 'hidden', background: '#fff', fontFamily: FONT, color: '#030712' }}>
@@ -130,9 +146,15 @@ export default function Login() {
               {errors.password && <p style={{ margin: '4px 0 0', fontSize: 12, color: '#EF4444' }}>{errors.password.message}</p>}
             </div>
 
-            <button type="submit"
-              style={{ width: '100%', padding: '13px', borderRadius: 8, background: GOLD, color: '#030712', fontWeight: 700, fontSize: 15, border: 'none', cursor: 'pointer', fontFamily: FONT, marginTop: 4 }}>
-              Sign In →
+            {serverError && (
+              <p role="alert" style={{ margin: 0, fontSize: 13, color: '#EF4444', background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.25)', borderRadius: 8, padding: '10px 12px' }}>
+                {serverError}
+              </p>
+            )}
+
+            <button type="submit" disabled={submitting}
+              style={{ width: '100%', padding: '13px', borderRadius: 8, background: GOLD, color: '#030712', fontWeight: 700, fontSize: 15, border: 'none', cursor: submitting ? 'not-allowed' : 'pointer', fontFamily: FONT, marginTop: 4, opacity: submitting ? 0.7 : 1 }}>
+              {submitting ? 'Signing In…' : 'Sign In →'}
             </button>
 
             <p style={{ textAlign: 'center', fontSize: 13, color: '#6B7280', margin: 0 }}>

@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import {
   LayoutDashboard,
   FileText,
@@ -27,6 +27,17 @@ import {
   Info,
   CalendarClock,
 } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
+import { useNavigate } from 'react-router-dom'
+import { useAuth } from '@/auth/AuthContext'
+import { fetchClientProfile } from '@/api/auth'
+import {
+  fetchApplications,
+  fetchDocuments,
+  fetchFacilities,
+  fetchNotifications,
+} from '@/api/portal'
+import type { Application, ClientDocument, Facility, PortalNotification } from '@/api/types'
 
 /* ───────────────────────── Constants ───────────────────────── */
 
@@ -60,7 +71,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'Account', icon: <User size={18} /> },
 ]
 
-function ClientSidebar() {
+function ClientSidebar({ onSignOut }: { onSignOut: () => void }) {
   return (
     <aside
       style={{
@@ -157,7 +168,7 @@ function ClientSidebar() {
 
       {/* Sign Out */}
       <div style={{ padding: '0 17px 20px', flexShrink: 0 }}>
-        <button style={{ display: 'flex', alignItems: 'center', gap: 12, width: '100%', padding: '12px 16px', borderRadius: 30, border: 'none', background: 'transparent', color: '#fff', fontFamily: FONT, fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>
+        <button type="button" onClick={onSignOut} style={{ display: 'flex', alignItems: 'center', gap: 12, width: '100%', padding: '12px 16px', borderRadius: 30, border: 'none', background: 'transparent', color: '#fff', fontFamily: FONT, fontSize: 14, fontWeight: 600, cursor: 'pointer' }}>
           <LogOut size={18} />
           Sign Out
         </button>
@@ -333,7 +344,7 @@ function WelcomeIllustration() {
   )
 }
 
-function WelcomeBanner() {
+function WelcomeBanner({ name }: { name: string }) {
   return (
     <div
       style={{
@@ -356,7 +367,7 @@ function WelcomeBanner() {
           Good Morning,
         </span>
         <h1 style={{ margin: 0, fontSize: 25, fontWeight: 800, lineHeight: '36px', color: '#030712' }}>
-          Sarah Nabuuma, here is your day at a glance
+          {name}, here is your day at a glance
         </h1>
         <p style={{ margin: 0, fontSize: 15, fontWeight: 400, lineHeight: '21px', color: '#1F2937', maxWidth: 811 }}>
           Your trade finance application is under Business team review. No action required — we'll notify you of any
@@ -379,37 +390,55 @@ interface MetricCard {
   indicators: { color: string; label: string }[]
 }
 
-const METRIC_CARDS: MetricCard[] = [
-  {
-    label: 'Active Applications',
-    value: '2',
-    icon: <FileCheck2 size={14} color="#000" />,
-    indicators: [
-      { color: '#F59E0B', label: 'In Review' },
-      { color: '#10B981', label: 'Approved' },
-    ],
-  },
-  {
-    label: 'Pending Review',
-    value: '1',
-    icon: <Clock size={14} color="#000" />,
-    indicators: [{ color: '#F43F5E', label: 'Awaiting Business Team' }],
-  },
-  {
-    label: 'Approved Loans',
-    value: '3',
-    icon: <CheckCircle2 size={14} color="#000" />,
-    indicators: [{ color: '#10B981', label: 'All in good standing' }],
-  },
-  {
-    label: 'Documents Pending',
-    value: '1',
-    icon: <FileWarning size={14} color="#000" />,
-    indicators: [{ color: '#F43F5E', label: 'Director ID Required' }],
-  },
-]
+function MetricCardsSection({
+  applications,
+  documents,
+  facilities,
+}: {
+  applications: Application[]
+  documents: ClientDocument[]
+  facilities: Facility[]
+}) {
+  const pendingStages = [
+    'submitted',
+    'docs_verified',
+    'operations_review',
+    'business_team',
+    'credit_committee',
+    'board_review',
+    'legal_contract',
+  ]
 
-function MetricCardsSection() {
+  const cards: MetricCard[] = [
+    {
+      label: 'Active Applications',
+      value: String(applications.length),
+      icon: <FileCheck2 size={14} color="#000" />,
+      indicators: [
+        { color: '#F59E0B', label: 'In Review' },
+        { color: '#10B981', label: 'Approved' },
+      ],
+    },
+    {
+      label: 'Pending Review',
+      value: String(applications.filter((a) => pendingStages.includes(a.stage)).length),
+      icon: <Clock size={14} color="#000" />,
+      indicators: [{ color: '#F43F5E', label: 'Awaiting Business Team' }],
+    },
+    {
+      label: 'Approved Loans',
+      value: String(facilities.filter((f) => f.status === 'active').length),
+      icon: <CheckCircle2 size={14} color="#000" />,
+      indicators: [{ color: '#10B981', label: 'All in good standing' }],
+    },
+    {
+      label: 'Documents Pending',
+      value: String(documents.filter((d) => d.status === 'pending').length),
+      icon: <FileWarning size={14} color="#000" />,
+      indicators: [{ color: '#F43F5E', label: 'Director ID Required' }],
+    },
+  ]
+
   return (
     <div
       style={{
@@ -419,7 +448,7 @@ function MetricCardsSection() {
         fontFamily: FONT,
       }}
     >
-      {METRIC_CARDS.map((card) => (
+      {cards.map((card) => (
         <div
           key={card.label}
           style={{
@@ -833,15 +862,26 @@ interface Step {
   status: 'done' | 'active' | 'pending'
 }
 
-const STEPS: Step[] = [
-  { label: 'Submitted', status: 'done' },
-  { label: 'Docs Verified', status: 'done' },
-  { label: 'Operations Review', status: 'done' },
-  { label: 'Business Team', status: 'active' },
-  { label: 'Credit Committee', status: 'pending' },
-  { label: 'Board Review', status: 'pending' },
-  { label: 'Legal & Contract', status: 'pending' },
-  { label: 'Disbursement', status: 'pending' },
+const STAGE_ORDER = [
+  'submitted',
+  'docs_verified',
+  'operations_review',
+  'business_team',
+  'credit_committee',
+  'board_review',
+  'legal_contract',
+  'disbursement',
+]
+
+const STEPS = [
+  'Submitted',
+  'Docs Verified',
+  'Operations Review',
+  'Business Team',
+  'Credit Committee',
+  'Board Review',
+  'Legal & Contract',
+  'Disbursement',
 ]
 
 function StepDot({ step, index }: { step: Step; index: number }) {
@@ -908,7 +948,14 @@ function StepDot({ step, index }: { step: Step; index: number }) {
   )
 }
 
-function ProgressStepper() {
+function ProgressStepper({ application }: { application: Application | undefined }) {
+  const currentStage = application?.stage ?? 'submitted'
+  const activeIndex = Math.max(STAGE_ORDER.indexOf(currentStage), 0)
+  const steps: Step[] = STEPS.map((label, i) => ({
+    label,
+    status: i < activeIndex ? 'done' : i === activeIndex ? 'active' : 'pending',
+  }))
+
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12, fontFamily: FONT }}>
       {/* Header */}
@@ -916,7 +963,7 @@ function ProgressStepper() {
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <h3 style={{ margin: 0, fontSize: 14, fontWeight: 800, color: '#111827' }}>Application Progress</h3>
           <span style={{ fontSize: 12, fontWeight: 400, color: '#6B7280' }}>
-            Trade Finance · TF-2026-0048
+            {application?.product_type ?? 'Trade Finance'} · {application?.reference ?? '—'}
           </span>
         </div>
         <div
@@ -929,7 +976,9 @@ function ProgressStepper() {
             borderRadius: 9999,
           }}
         >
-          <span style={{ fontSize: 12, fontWeight: 600, color: '#78350F' }}>In Review</span>
+          <span style={{ fontSize: 12, fontWeight: 600, color: '#78350F' }}>
+            {currentStage === 'disbursement' ? 'Disbursed' : 'In Review'}
+          </span>
         </div>
       </div>
 
@@ -957,7 +1006,7 @@ function ProgressStepper() {
             zIndex: 1,
           }}
         >
-          {STEPS.map((step, i) => (
+          {steps.map((step, i) => (
             <div key={step.label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
               <StepDot step={step} index={i} />
               <span
@@ -1205,37 +1254,66 @@ interface NotifItem {
   timeColor: string
 }
 
-const NOTIFICATIONS: NotifItem[] = [
-  {
-    title: 'Document Request',
-    description: 'Director ID documents are overdue for application TF-2026-0048.',
-    time: '2h ago',
+interface NotificationStyle {
+  iconBg: string
+  iconBorder: string
+  timeColor: string
+  icon: ReactNode
+}
+
+const NOTIFICATION_STYLES: Record<string, NotificationStyle> = {
+  document_request: {
     iconBg: '#FEF3C7',
     iconBorder: '#FECC15',
-    icon: <FileWarning size={14} color={GOLD} />,
     timeColor: '#E11D48',
+    icon: <FileWarning size={14} color={GOLD} />,
   },
-  {
-    title: 'Application Update',
-    description: 'Your trade finance application passed Operations Review successfully.',
-    time: '1d ago',
+  application_update: {
     iconBg: '#DBEAFE',
     iconBorder: '#1D4ED8',
-    icon: <Info size={14} color="#1D4ED8" />,
     timeColor: '#9CA3AF',
+    icon: <Info size={14} color="#1D4ED8" />,
   },
-  {
-    title: 'Payment Received',
-    description: 'Monthly instalment of UGX 7,458,022 received for facility FL-2025-0312.',
-    time: '3d ago',
+  payment_received: {
     iconBg: '#D1FAE5',
     iconBorder: '#047857',
-    icon: <CheckCircle2 size={14} color="#047857" />,
     timeColor: '#9CA3AF',
+    icon: <CheckCircle2 size={14} color="#047857" />,
   },
-]
+}
 
-function NotificationsBox() {
+const DEFAULT_NOTIFICATION_STYLE: NotificationStyle = {
+  iconBg: '#F3F4F6',
+  iconBorder: '#D1D5DB',
+  timeColor: '#9CA3AF',
+  icon: <Bell size={14} color="#6B7280" />,
+}
+
+function timeAgo(iso: string): string {
+  const seconds = Math.floor((Date.now() - new Date(iso).getTime()) / 1000)
+  if (seconds < 60) return 'just now'
+  const minutes = Math.floor(seconds / 60)
+  if (minutes < 60) return `${minutes}m ago`
+  const hours = Math.floor(minutes / 60)
+  if (hours < 24) return `${hours}h ago`
+  const days = Math.floor(hours / 24)
+  return `${days}d ago`
+}
+
+function NotificationsBox({ notifications }: { notifications: PortalNotification[] }) {
+  const items: NotifItem[] = notifications.map((n) => {
+    const style = NOTIFICATION_STYLES[n.category] ?? DEFAULT_NOTIFICATION_STYLE
+    return {
+      title: n.title,
+      description: n.description,
+      time: timeAgo(n.created_at),
+      iconBg: style.iconBg,
+      iconBorder: style.iconBorder,
+      icon: style.icon,
+      timeColor: style.timeColor,
+    }
+  })
+
   return (
     <div
       style={{
@@ -1259,7 +1337,7 @@ function NotificationsBox() {
 
       {/* Items */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        {NOTIFICATIONS.map((n, i) => (
+        {items.map((n, i) => (
           <div key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
             <div
               style={{
@@ -1292,7 +1370,13 @@ function NotificationsBox() {
 
 /* ──────────────────── Status & Facility ────────────────── */
 
-function StatusAndFacilitySection() {
+function StatusAndFacilitySection({
+  application,
+  notifications,
+}: {
+  application: Application | undefined
+  notifications: PortalNotification[]
+}) {
   return (
     <div style={{ padding: '32px 12px 0', display: 'flex', gap: 16, fontFamily: FONT }}>
       {/* Left: Stepper + Alerts */}
@@ -1308,13 +1392,13 @@ function StatusAndFacilitySection() {
           gap: 20,
         }}
       >
-        <ProgressStepper />
+        <ProgressStepper application={application} />
       </div>
 
       {/* Right: Calc results + Notifications */}
       <div style={{ flex: '1 1 35%', display: 'flex', flexDirection: 'column', gap: 16 }}>
         <CalcResultsCard />
-        <NotificationsBox />
+        <NotificationsBox notifications={notifications} />
       </div>
     </div>
   )
@@ -1411,7 +1495,35 @@ function FooterCTA() {
 /* ──────────────────── Main Component ──────────────────── */
 
 export default function ClientDashboard() {
-  const [_activeNav, _setActiveNav] = useState(0)
+  const { logout } = useAuth()
+  const navigate = useNavigate()
+  const { data: profile } = useQuery({
+    queryKey: ['client-profile'],
+    queryFn: fetchClientProfile,
+  })
+  const { data: applications = [] } = useQuery({
+    queryKey: ['portal-applications'],
+    queryFn: fetchApplications,
+  })
+  const { data: documents = [] } = useQuery({
+    queryKey: ['portal-documents'],
+    queryFn: fetchDocuments,
+  })
+  const { data: facilities = [] } = useQuery({
+    queryKey: ['portal-facilities'],
+    queryFn: fetchFacilities,
+  })
+  const { data: notifications = [] } = useQuery({
+    queryKey: ['portal-notifications'],
+    queryFn: fetchNotifications,
+  })
+
+  const latestApplication = applications[0]
+
+  const handleSignOut = async () => {
+    await logout()
+    navigate('/login', { replace: true })
+  }
 
   return (
     /* Outermost shell — full dark background, sidebar lives here */
@@ -1426,7 +1538,7 @@ export default function ClientDashboard() {
       }}
     >
       {/* Sidebar — sticks in place, never scrolls */}
-      <ClientSidebar />
+      <ClientSidebar onSignOut={handleSignOut} />
 
       {/* Right zone — dark padding wraps the white card so it "floats" */}
       <div
@@ -1459,11 +1571,11 @@ export default function ClientDashboard() {
 
           {/* Scrollable content — only this area scrolls */}
           <div style={{ flex: 1, overflowY: 'auto', overflowX: 'hidden', minHeight: 0, paddingBottom: 24 }}>
-            <WelcomeBanner />
-            <MetricCardsSection />
+            <WelcomeBanner name={profile?.full_name || 'there'} />
+            <MetricCardsSection applications={applications} documents={documents} facilities={facilities} />
             <FinanceProductsSection />
             <TradeInsightsSection />
-            <StatusAndFacilitySection />
+            <StatusAndFacilitySection application={latestApplication} notifications={notifications} />
             <FooterCTA />
           </div>
         </div>

@@ -7,6 +7,7 @@ import FAQPage from '@/features/portal/FAQPage'
 import Login from '@/AuthPages/Login'
 import CreateAccount from '@/AuthPages/CreateAccount'
 import ClientDashboard from '@/features/dashboards/ClientDashboard'
+import ProtectedRoute from '@/router/ProtectedRoute'
 
 const router = createBrowserRouter([
   { path: '/',                    element: <LandingPage /> },
@@ -16,7 +17,14 @@ const router = createBrowserRouter([
   { path: '/insights',            element: <InsightsPage /> },
   { path: '/about',               element: <AboutPage /> },
   { path: '/faq',                 element: <FAQPage /> },
-  { path: '/client/dashboard',    element: <ClientDashboard /> },
+  {
+    path: '/client/dashboard',
+    element: (
+      <ProtectedRoute>
+        <ClientDashboard />
+      </ProtectedRoute>
+    ),
+  },
 ])
 
 export default function AppRouter() {

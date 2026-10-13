@@ -1,5 +1,7 @@
 import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 import PageLayout from '@/components/layout/PageLayout'
+import { fetchArticles } from '@/api/insights'
 
 const GOLD = '#F8AE0D'
 const GOLD_BORDER = 'rgba(248,174,13,0.2)'
@@ -17,42 +19,15 @@ function Tag({ children }: { children: React.ReactNode }) {
   )
 }
 
-/* ─── Article data ─── */
-const ARTICLES = [
-  {
-    id: 1,
-    category: 'Market Trends',
-    date: 'October 25, 2025',
-    readTime: '6 min read',
-    title: 'UgExim Champions Export Growth at International Buyers Week',
-    snippet:
-      'The recent Uganda Connect event highlighted critical opportunities for local manufacturers to scale their operations globally with strategic financing support.',
-    image: '/insight-buyers-week.jpg',
-    featured: true,
-  },
-  {
-    id: 2,
-    category: 'Agribusiness',
-    date: 'February 27, 2026',
-    readTime: '8 min read',
-    title: 'The Future of Coffee Exports: Navigating New Global Standards',
-    snippet:
-      'How Ugandan coffee producers can adapt to changing international standards while maintaining competitive profit margins in specialty markets.',
-    image: '/insight-coffee.jpg',
-    featured: false,
-  },
-  {
-    id: 3,
-    category: 'Trade Finance',
-    date: 'March 10, 2026',
-    readTime: '5 min read',
-    title: 'Asset Financing: Accelerating Manufacturing Capacity for SMEs',
-    snippet:
-      'Discover how vehicle and machinery financing is enabling small businesses in Kampala to double their production output in less than twelve months.',
-    image: '/insight-asset-finance.jpg',
-    featured: false,
-  },
-]
+/* ─── Helpers ─── */
+function formatDate(iso: string): string {
+  const [year, month, day] = iso.split('-').map(Number)
+  return new Date(year, month - 1, day).toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  })
+}
 
 const CATEGORIES = ['All', 'Market Trends', 'Agribusiness', 'Trade Finance']
 const SORT_OPTIONS = ['Newest First', 'Oldest First', 'Most Popular']
@@ -71,7 +46,22 @@ export default function InsightsPage() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [sortBy, setSortBy] = useState('Newest First')
 
-  const filtered = ARTICLES.filter(
+  const { data: articles, isLoading } = useQuery({
+    queryKey: ['insights-articles'],
+    queryFn: fetchArticles,
+  })
+
+  const displayArticles = (articles ?? []).map((a) => ({
+    id: a.id,
+    category: a.category,
+    date: formatDate(a.published_at),
+    title: a.title,
+    snippet: a.snippet,
+    image: a.image,
+    featured: a.featured,
+  }))
+
+  const filtered = displayArticles.filter(
     (a) => activeCategory === 'All' || a.category === activeCategory,
   )
 
@@ -270,8 +260,15 @@ export default function InsightsPage() {
           ))}
         </div>
 
+        {/* Loading state */}
+        {isLoading && (
+          <div className="flex items-center justify-center py-20">
+            <p style={{ color: '#9CA3AF' }}>Loading insights…</p>
+          </div>
+        )}
+
         {/* Empty state */}
-        {sorted.length === 0 && (
+        {!isLoading && sorted.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20 gap-3">
             <svg width="40" height="40" fill="none" stroke={GOLD} strokeWidth="1.5" viewBox="0 0 24 24" style={{ opacity: 0.4 }}>
               <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" strokeLinecap="round" />
